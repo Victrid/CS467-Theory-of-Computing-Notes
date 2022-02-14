@@ -1,0 +1,33 @@
+\documentclass{CompTheo}
+\usepackage{comptheo}
+
+\graphicspath{{figures/}}
+
+\title{Lecture Notes on\\ Introduction to \\ the Theory of Computing}
+\author{Victrid}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+\import{contents}{preface}
+\tableofcontents
+\mainmatter
+
+\import{contents/Boolean Circuits}{M-boolean-circuits}
+\import{contents/Languages}{M-languages}
+\import{contents/Set Theory}{M-set-theory}
+\import{contents/Primitive Recursive}{M-primitive-recursive}
+\import{contents/Lambda Calculus}{M-lambda-calculus}
+\import{contents/Turing Machines}{M-turing-machines}
+\import{contents/First Order Logic}{M-fol}
+%\import{contents}{final}
+
+\backmatter
+
+\listoftheorems[ignoreall,show={theorem,lemma,corollary}]
+\def\listtheoremname{List of Definitions}
+\listoftheorems[ignoreall,show={definition}]
+\end{document}

@@ -1,0 +1,289 @@
+\section{Build Circuits}
+
+\subsection{Circuit Design Measurements}
+
+\subsubsection{Common measurements: size, depth, and fan-in}
+
+\paragraph{Circuit size} number of gates.
+
+\paragraph{Depth} longest path from input to output.
+
+\paragraph{Fan-in} (fan-in $N$) only $N$ incoming edges. 
+
+\paragraph{Circuit evaluation} Typically a good circuit has size \by \(O(n^c)\), depth \by \(O(1)\), \(O(\log n)\), \(o(n^\epsilon)\). (i.e. \(\Omega(n^{0.01})\) is a bad one)
+
+\subsubsection{Stacking}
+
+\emph{Unbounded} fan-in $\iff$ fan-in $\infty$.
+
+Fan-in can be decoupled by \textbf{stacking} as shown in figure \ref{fig:decouple}. 
+
+\begin{figure}[ht]
+    \centering
+    \def\svgwidth{0.4\textwidth}
+    \input{figures/stack-fanin.pdf_tex}
+    \caption{Decouple}
+    \label{fig:decouple}
+\end{figure}
+
+Stacking will trade depth with smaller fan-in. 
+
+\paragraph{The complexity of Stacking} just like binary trees, it can be arranged with the minimum depth of $O(\log n)$.
+
+\subsection{Build a Binary Adder}
+\begin{definition}[Parity Function]
+\(\parity_i(\arr{x}) = \left(\sum \arr{x}\right) \bmod i\)
+\end{definition}
+
+\subsubsection{Carry Ripple-through Adder}
+
+Adding in the \emph{human computation} way. 
+
+Let two adding $n$-bit elements $\arr{x}, \arr{y}$ be 
+
+$$\arr{x} = x_{n-1} x_{n-2} \dots x_0, \arr{y} = y_{n-1} y_{n-2} \dots y_0$$
+
+Define
+
+\begin{align*}
+&&z_i= & \begin{cases}
+1, & 2 \nmid x_i + y_i + c_i \\ 
+0, & 2 \mid x_i + y_i + c_i
+\end{cases}  &&= \parity_2(x_i + y_i + c_i) \\
+&&c_{i+1}= &\begin{cases}
+1, & x_i + y_i + c_i \ge 2\\ 
+0, & x_i + y_i + c_i \le 1
+\end{cases} &&= \Maj(x_i, y_i, c_i)
+\end{align*}
+
+The adding circuit structure are shown as figure \ref{fig:c-rt-adder}.
+
+\begin{figure}[ht]
+    \centering
+    \def\svgwidth{0.25\textwidth}
+    \input{figures/carry-rt-adder.pdf_tex}
+    \quad
+    \def\svgwidth{0.35\textwidth}
+    \input{figures/adder-rt.pdf_tex}
+    \caption{Carry Ripple-through Adder, $n=2$}
+    \label{fig:c-rt-adder}
+\end{figure}
+
+This adder has size and depth complexity \by \(\Theta(n)\).
+
+\begin{theorem}[Depth 2, Unbounded]
+Every Boolean function has a circuit of depth 2 if allowing unbounded fan-in.
+\end{theorem}
+
+\begin{proof}
+Refer to Theorem \ref{th:boolean-circuit-soundness}. The circuit constructed will have depth of 3, where the $f_{eye}$ and CNF sub-word $f_t$ are both constructed via $\land$, which can be reduced via the reverse procedure of \emph{stacking}.
+\end{proof}
+
+\begin{remark}
+The construction \(\Lor_{a, f(a)=1}f_a(x)\) might give us a circuit
+of size \(2^n\).
+\end{remark}
+
+\begin{definition}[Acceptable]
+A Boolean circuit in polynomial size and constant/arithmetic depth.
+\end{definition}
+
+\subsubsection{Carry Look-ahead Adder}\label{subsubse:carry-look-ahead}
+
+Define two additional arrays:
+
+\begin{itemize}
+    \item \(\arr{g}, g_i=x \land y\): Generates a carry at position $i$.
+    \item \(\arr{p}, p_i = x \lor y\): Propagates the carry if it gets one.
+\end{itemize}
+
+Then, the carry $c_i$ exists if meeting any situations below:
+\begin{itemize}
+    \item $g_i = 1$, this position generates carry.
+    \item Any $j < i$, $g_j \land (p_{j+1} \land p_{j+2} \land \dots \land p_i)$, the carry is propagated to this position.
+\end{itemize}
+
+Current position $z_i$ is calculated by parity.
+
+This adder has depth \by \(\Theta(1)\) (constant depth) and size \by $\Theta(n^3)$.
+
+\begin{proof}
+\begin{gather*}
+    \text{\textsc{Size}}(c_{i+1}) = \sum_{j=1}^i(i-j+1) = \binom{i+1}{2}\\
+    \sum_i \text{\textsc{Size}}(c_i) = \sum_{i=0}^n\binom{i+1}{2}= \binom{n+2}{3}-\binom{0}{2} \sim O(n^3)
+\end{gather*}
+\end{proof}
+
+\begin{remark}[Smarter construction]
+We can have a fan-in 2 circuit computing parity with size \by $O(n \log n)$ and depth \by $O(\log n)$.
+\end{remark}
+
+\subsection{Shrink \texorpdfstring{$\lnot$-Gates}{NOT Gates}} 
+
+Compose 3 not gate with only 2 \(\lnot\) gates but as many \(\land, \lor\) as you wish.
+
+This solution is taken from \href{https://www.eetimes.com/how-to-invert-three-signals-with-only-two-not-gates-and-no-xor-gates-part-1}{eetimes.com}\footnote{https://www.eetimes.com/how-to-invert-three-signals-with-only-two-not-gates-and-no-xor-gates-part-1}.
+
+\begin{verbatim}
+Inputs: A,B,C;
+Outputs: not-A, not-B, not-C;
+
+Internal Nodes: 
+    2Or3Ones = ((A & B) + (A & C) + (B & C));
+    0or1Ones = !(20r30nes)
+    1One = 0or1Ones & (A + B + C); 
+    1or3Ones = 1One + (A & B & C);
+    0or2Ones = !(1or3Ones);
+    0Ones = 0or2Ones & 0or1Ones;
+    2Ones = Oor20nes & 2or30nes;
+
+Equations for Outputs: 
+    not-A = 0Ones + (1One & (B + C)) + (2Ones & (B & C)); 
+    not-B = 0Ones + (1One & (A + C)) + (2Ones & (A & C));
+    not-C = 0Ones + (1One & (A + B)) + (2Ones & (A & B));
+\end{verbatim}
+
+\subsection{Parity Function Circuit}
+
+\begin{remark}
+Building functions fan-in 2 is trivial (with 4 entries in the truth
+table), but not with unbounded fan-in.
+\end{remark}
+
+\paragraph{Build with Theorem \ref{th:boolean-circuit-soundness}} build with DNF formula \(D = \lor (T_i)\) where \(T_i\) is one of the truth table entries.
+
+It produces circuit with constant depth 2, but the size \by \( O(2^{n})\) which is bad.
+
+\paragraph{Reducing of $\parity(x,y)$} Build $\parity(\mathbf{x})$ by $\parity(x_1, \parity(x_2, \dots, x_n))$ recursively.
+
+Size \by \(O(n)\), but the (linear) depth goes up \by \(O(n)\), the tree depth \by \(O(\log n)\).
+
+\paragraph{Unpacking} Reduce $\parity^n(x)$ with $\parity^{\sqrt{n}}(\parity^{\sqrt{n}}(x))$ as shown in figure \ref{fig:unpack}.
+
+It produces circuit with constant depth 4, size \by \(O(2^{\sqrt{n}})\) with unbounded fan-in. 
+
+\begin{figure}[ht]
+    \centering
+    \def\svgwidth{0.55\textwidth}
+    \input{figures/unpacking-parity.pdf_tex}
+    \caption{Unpacking by 2}
+    \label{fig:unpack}
+\end{figure}
+
+If we generalize the unpacking method, we get the H\aa{}stad's Switching Algorithm.
+
+\begin{theorem} [H\aa{}stad's Switching Algorithm]
+Any circuit of depth \(d+1\) requires
+size of \(2^{\Omega (\sqrt[d]{n})}\).
+\end{theorem}
+
+\begin{corollary}
+The circuit cannot be built with certain constant depth with fan-in 2.
+\end{corollary}
+
+\begin{proof}
+For constant depth with fan-in 2 gates, the total gates \(\le 2^{\text{depth}+1}-1\), which is not enough to even process $n$ inputs.
+\end{proof}
+
+\subsection{Majority Function with \texorpdfstring{$n$}{n} Input, \texorpdfstring{\(2 \nmid n\)}{2∤n}}
+
+\paragraph{Binary adder} instead of computing majority, use add and
+  compare.
+
+A $k$-bit adder with depth \by \(O(k)\), size \by \(O(k^3)\), the compare can be represented as $\lor$ of higher bits.
+
+To compute $n$ summation, we need $\log n$ layers of addition, where for layer $k$ counting from the bottom are $k$-bit adders. We use the carry look-ahead adder from part \ref{subsubse:carry-look-ahead}.
+
+This implementation has depth \by \(O(n \log n)\), size \by \(O(n\log ^3n)\).
+
+\paragraph{Sort the input} a fan-in 2 \emph{monotone} sorting network with size \(O(n \log^2 n)\), depth \(O(log^2 n)\).
+
+2 bit sorter: \(\sort(x,y) = (x \land y , x\lor y)\), size \(O(n^2)\), depth \(O(n)\)
+
+\paragraph{2-for-3 adders} Size polynomial, depth \(O(\log n)\), fan-in
+  2.
+
+\begin{observation}
+A binary adder for constant depth, fan-in 2 is impossible.
+\end{observation} 
+
+\begin{theorem}
+Majority could be computed in a circuit of poly size,
+depth \(O(\log n)\) fan-in 2, with \(\lnot, \lor, \land\) gates.
+\end{theorem}
+
+\begin{proof}
+use 2-for-3 trick to add 3 binary numbers in constant depth.
+
+2-for-3 adders example:
+
+ \begin{verbatim}
+    1 2 3 4 5 6
+    4 5 6 7 8 9
+  + 1 0 3 1 2 1
+ -----------------
+    6 7 2 2 5 6 -> The bit
+    0 0 1 1 1 1 -> The carry
+\end{verbatim}   
+
+In the top, we add the bits and the carry by a normal binary adder of $\log n$ bits, which has size \by $O(\log^3 n)$ and depth \by $O(\log n)$. This implementation of adder will has depth $\sim O(\log n)$ and polynomial size.
+\end{proof}
+
+\paragraph{Monotone 2-for-3 adders}
+
+\begin{theorem}[Valiant]
+Majority could be computed in a circuit of polynomial size,
+depth \by \(O(\log n)\), fan-in 2, with \(\lor, \land\) gates.
+\end{theorem}
+
+\begin{proof}
+Exists by possibility.
+
+Consider a random network constructed by tree-shaped of \(\Maj_3\).
+
+Assume \(\arr{x}=x_0\dots x_n\), \(C^0=x_i\) (\(C^0\) only checks one
+item), Then 
+
+\begin{gather*}
+P[C^0=\Maj(\arr{x})] \ge \frac{k+1}{2k+1}, 2k+1=n\\
+P[C^0=\Maj(\arr{x})] \ge \frac{1+\epsilon}{2}, \epsilon = \frac{1}{n}  
+\end{gather*}
+
+Let \(C^d = \Maj(C^{d-1}_1, C^{d-1}_2, C^{d-1}_3)\) where 3 of \(C^{d-1}_i\)
+are sampled independently.
+
+Then
+\begin{align*}
+& && P[C^d = \Maj]  \\
+&=&& P[C^{d-1}_1\land C^{d-1}_2\land C^{d-1}_3=\Maj] + 3P[C^{d-1}_1 \land C^{d-1}_2 \land \lnot C^{d-1}_3=\Maj]\\
+&=&& \left(\frac{1+\epsilon_{d-1}}{2}\right)^3+ 3 \left(\frac{1-\epsilon_{d-1}}{2}\right)\left(\frac{1+\epsilon_{d-1}}{2}\right)^2 \\
+&=&& \frac{1+1.5\epsilon_{d-1} - 0.5\epsilon_{d-1}^3}{2} \\
+&\ge&& \frac{1 + \epsilon_d}{2}  \text{ for } \epsilon_0=\frac{1}{n},\epsilon_d = \frac{3}{2}\epsilon_{d-1}-\frac{1}{2}\epsilon_{d-1}^3
+\end{align*}
+
+$$\epsilon_d \ge \cfrac{11}{8}\epsilon_{d-1} \Dif \epsilon_{d-1} \le \cfrac{1}{2}$$
+
+We find the maximum $d-1$ that meets $\epsilon_{d-1} \le \cfrac{1}{2}$, i.e.
+$$\frac{1}{2} \le \frac{1}{n}\left(\frac{11}{8}\right)^{d-1}$$
+We choose $d-1 = \cfrac{\log n}{\log (11/8)}$, then $\epsilon_d \ge \cfrac{3}{4}$.
+
+Now we define $P(C^d) \ge 1-\delta_{d}$, $\delta = \cfrac{1}{4} $. We have
+
+$$P(C^{d+1}) \ge 1-3\delta_d^2, \delta_{d+1} \le \frac{3}{4}\delta_d, \delta_{d+k} \le \frac{1}{4}\left(\cfrac{3}{4}\right)^k$$
+
+When $k \ge 6$, $\delta_{d+k} \le \cfrac{1}{18} := \delta_{m}$.
+
+$$\delta_{m+k} \le (9\delta_{m})^{2^k} = \left(\frac{1}{2}\right)^{2^k}$$
+
+Let $k = 2 \log n$, then $\delta_{m+k} \le \left(\cfrac{1}{2}\right)^{n^2}$.
+
+For all possible input $\mathbf{x}$, define the probability that $\Maj$ fits as $\mathbf{P}$, 
+
+\begin{gather*}
+    \mathbf{P}(C^{10\log n}) \ge \mathbf{P}(C^{\frac{\log n}{\log (11/8)}+ 7 + 2\log n})  \\ 
+    \ge 1-\sum_{\mathbf{x}} \left(\frac{1}{2}\right)^{n^2} = 1-\frac{1}{2^{n^2-n}}
+\end{gather*}
+
+
+So there exists a network that is equivalent to $\Maj$ function.
+\end{proof}

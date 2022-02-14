@@ -1,0 +1,67 @@
+\section{Structure}
+
+\begin{definition}[Signature $\sigma$] Signature is a finite set of 
+\begin{itemize}
+\item
+   Function symbols $\mathbb{B}^* \rightarrow \mathbb{B}$.
+\item
+  Predicate symbols
+\end{itemize}
+\end{definition}
+
+\begin{observation}
+For group theory the signature $\sigma = \{ f, = \}$.
+\end{observation}
+
+\begin{definition}[Variable]
+Infinite set of variable symbols, e.g. \(\{x,y,\dots\}\)
+\end{definition}
+
+\begin{definition}[Terms] Terms are
+\begin{itemize}
+\item
+  constants ($0$-ary functions) and variables.
+\item
+  if \(f\) is \(k\)-ary function symbol, \(t_1,\dots,t_k\) are all terms
+  then \(f(t_1, \dots, t_k)\) is term.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Formulae] Formulae are
+\begin{itemize}
+\item
+  atomic formulae: if $P$ is a $k$-ary predicate symbol, $t_1, \dots, t_k$ are
+  terms then $P(t_1,\dots,t_k)$ is an atomic formula.
+\item
+  $F,G$ are formulae then $F,G$ connected with $\land, \lor, \lnot, \rightarrow$, etc. are formulae. ($F \rightarrow G \equiv \lnot F \lor G$)
+\item
+  $F$ is a formula and $x$ is variable, $x, F$ grouped by quantifiers $\forall, \exists$, like $\forall x, F$ is a formula.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Sentences]
+Formulae without free variables are sentences.
+\end{definition}
+
+\begin{remark}
+A sentence in first order logic is by itself neither true nor false. Its truth value depends on the meaning we give the symbols in the signature.
+\end{remark}
+
+\begin{definition}[Structure]A structure $A$ over a signature \(\sigma\) is
+
+\begin{itemize}
+\item
+  A set \(U\) called the universe, it is the domain $\mathrm{dom}(A)$
+\item
+  For every (\(k\)-ary) predicate symbol $P^k$, a \(k\)-ary relation
+  \(P^k_A \subseteq U^k\)
+\item
+  For every arity \(k\) , function symbol \(f^k\), a function (Interpretation function)
+  \(f^k_A : U^k \rightarrow U\)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Substitution]
+Given a structure $A$ and a sentence $F$ (both over the same signature $\sigma$),
+define \(C[a / b]\) means substitute \(a\) for \(b\) in \(C\). 
+\end{definition}

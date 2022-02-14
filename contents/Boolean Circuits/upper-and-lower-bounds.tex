@@ -1,0 +1,176 @@
+\section{Upper and Lower Bounds}
+
+In this section, we discuss about the upper bounds of a fan-in 2
+circuit's \(\land, \lor\) gates.
+
+\subsection{Upper Bound}
+
+\subsubsection{Truth Table Upper Bound}
+
+\begin{theorem}
+Truth table method gives a DNF formula with \(< 2^n\) items.
+\end{theorem}
+
+\begin{proof}
+For \(\{x_0,\dots, x_n\}\):
+
+Freeze the \(\{x_0,\dots, x_{n-1}\}\), check the last bit \(x_n\).
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{c|c}
+    \hline
+    Truth & Combination \\\hline
+        0, 1 & one item in DNF \\\hline
+0, 0 & no item in DNF \\\hline
+1, 1 & 2 items can be bounded by removing \(x_{n}\) \\\hline
+    \end{tabular}
+\end{table}
+\end{proof}
+
+\begin{corollary}
+Every \(f: \B^n \rightarrow \B\) has a DNF with
+\(\le 2^{n-1}\) items.
+\end{corollary}
+
+We need one large \(\lor\)-gates with fan-in \(2^{n-1}\), and $2^{n-1}$ \(\land\)-gates with fan-in
+  \(n\), i.e. \(2^{n-1}-1\) fan-in 2 \(\lor\)-gates and \((n-1)2^{n-1}\) fan-in 2 \(\land\)-gates.
+
+The upper bound: \(n2^{n-1}-1\).
+
+\subsubsection{Multiplexer Upper Bound}
+
+The MUX function
+$$f_n = ( f_{n-1} \land \lnot x_n )\lor (f'_{n-1} \land x_n)$$
+
+which means if \(x_n\) then $f'_{n-1}$ else $f_{n-1}$.
+
+Construct a tree recursively with MUX gate.
+
+Depth $n-2$, and \(2^{n-1} -1\) MUX gates. MUX gate can be constructed as $(f_{true}\land \text{cond} )\lor (f_{false}\land \lnot \text{cond} )$, which needs 3 fan-in 2 gates.
+
+The upper bound: \(3\times(2^{n-1} -1)\).
+
+\subsubsection{Lupanov Upper Bound}
+
+\begin{theorem}[Lupanov, 1958]
+$$\text{\textsc{Size}}(C)_n \le \frac{2^n}{n}(1+o(1))$$
+\end{theorem}
+
+\begin{definition}[\(\mathbb{F}_2\) polynomial]
+Parity of one or more clauses where clauses are conjunctions of literals. The clauses are called monomials.
+\end{definition}
+
+\begin{table}[ht]
+        \centering
+        \begin{tabular}{c|c}
+        \hline
+             Expressions & Construction \\\hline
+             DNF & \(\lor\) of \(\land\)'s \\\hline
+              CNF & \(\land\) of \(\lor\)'s \\\hline
+              \(\mathbb{F}_2\) polynomial & \(\parity\) of \(\land\)'s \\\hline
+        \end{tabular}
+        \caption{Comparing Different Expressions}
+        \label{tab:comp_f2}
+    \end{table}
+
+Use multiplication to imply $\land$, use modular addition to imply $\parity$.
+
+\begin{example}
+ A Boolean \(\mathbb{F}_2\) polynomial \(x + tz + xuv (\bmod 2)\).
+\end{example}
+
+For alphabet $\abs{\Sigma} = n$, we have \(2^n\) monomials and \(2^{2^n}\) polynomials.
+
+\begin{theorem}
+Every Boolean function \(f: \B^n \rightarrow \B\) can be written as a \(\mathbb{F}_2\) polynomial.
+\end{theorem}
+
+\begin{proof}
+We can construct the transform table as \ref{tab:f2_transform}.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{c|c}
+    \hline
+         Boolean function & \(\mathbb{F}_2\)-polynomial \\\hline
+         \(x \land y\) & $xy$ \\\hline
+  \(\lnot x\) & $1+x$ \\\hline
+  \(x \lor y\) & $x+y+xy$ \\\hline
+    \end{tabular}
+    \caption{Transforming Boolean function to $\mathbb{F}_2$-polynomial}
+    \label{tab:f2_transform}
+\end{table}
+
+The size of DNF clause can be shrinked as:
+$$\Land \{\arr{x}\} = \lnot\Land\{\lnot x_i\} = 1 + \prod (1+x_i), \text{\textsc{Size}}(\land_n) \le 2n$$
+\end{proof}
+
+\begin{definition}
+Let \(F \subseteq \B^n \rightarrow \B\). \(S(F)\) is the
+  size of a smallest \(\parity-\land\) circuit $C$ that computes
+  \(\forall f \in F\).
+\end{definition}
+
+\begin{lemma}\label{lm:polynomial-function-group}
+let \(p \ge 1\) then
+$$S(F) \le 2^n + \left\lceil \frac{2^n}{p} \right\rceil \cdot 2^p + \frac{\abs{F}\cdot 2^n}{p}$$
+\end{lemma}
+
+\begin{proof}
+First construct all monomials.
+
+A trivial summation could be large. Observe that if you already have a gate for \(x^I\) then to compute \(x^{I \cup \{i\}}\) only needs one more gate. Then we need less than \(2^n\) gates to compute all monomials.
+
+Group monomials into $q$ groups, size $p$ each.
+
+\begin{figure}[ht]
+    \centering
+    \def\svgwidth{0.75\textwidth}
+    \input{figures/Lupanov.pdf_tex}
+\end{figure}
+
+We perform every addition in the monomial groups, which needs $2^p\;\parity$-gates for each group, which is $q\cdot 2^p$ in total. These polynomials are called in-group polynomials.
+
+For each \(f \in F\), write \(f = \parity_{i \in K} T_i = \sum{Poly_i}\) where each $Poly_i$ is an in-group polynomial of group $i$. We need at most $q-1$ \(\parity\)-gates for each $f \in F$.
+
+Then the total complexity should be $2^n$ for monomial calculation, $\left\lceil \frac{2^n}{p} \right\rceil \cdot 2^p$ for in-group polynomial, and $\abs{F} \cdot \left\lceil \frac{2^n}{p} \right\rceil$ for function computation.
+\end{proof}
+
+Now given $f(x_1,\dots,x_n)$ written as polynomial, select $m: 1\le m \le n$, factor out the variables $x_{m+1} \dots x_n$.
+
+$$\sum{(factor)*monomials}$$
+
+Where factor consists of $x_1,\dots,x_m$, and monomials consists of $x_{m+1},\dots,x_n$
+
+Compute all the monomials by \(2^{n-m}\), and use the method mentioned in lemma \ref{lm:polynomial-function-group} to compute the factors. Finally compute the product-sum part by \(2*2^{n-m}\).
+
+The total size:
+$$\text{\textsc{Size}}(f) = 3\times 2^{n-m} + 2^m +\frac{2^m}{p}*2^p+\frac{2^{n}}{p}$$
+
+Let $m = \sqrt{n}, p = n-m-\log n$, $\text{\textsc{Size}}(f) = \frac{2^n}{n}(1+o(1))$.
+
+\subsection{Lower Bound}
+
+\begin{theorem}[Shannon]
+  There are functions
+  \(f: \B^n \rightarrow \B\) with
+  \(\text{\textsc{Size}}(f) \ge \cfrac{2^n}{2+2n}\).
+\end{theorem}
+\begin{proof}
+
+\begin{lemma}
+A circuit of size $s$ can be encoded as a string of length
+\(\le s(2 + 2 \log s )\). By graph representation.
+\end{lemma}
+
+\begin{remark}
+That means there are \(\le 2^{s(1+\log s)}\) circuits of size
+\(\le s\).
+\end{remark}
+
+$$S \ge \frac{2^n}{2 + 2\log s} \ge \frac{2^n}{2+2n}$$
+
+If \(s < \cfrac{2^n}{2+2n}\) then \(\exists f: S(f) \ge s\).
+
+\end{proof}

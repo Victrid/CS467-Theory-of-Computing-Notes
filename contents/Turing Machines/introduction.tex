@@ -1,0 +1,39 @@
+\section{Introduction}
+
+Recall Finite state Automata on definition \ref{def:dfsa}.
+
+Do the modification:
+\begin{itemize}
+\item
+  Allow the FSA to stay, put and to go left
+\item
+  Allow the FSA to write on the memory
+\end{itemize}
+
+then it becomes the Turing Machine.
+
+Turing Machine is described by the following things:
+
+\begin{definition}[Turing Machine] A Turing machine consists of 
+\begin{itemize}
+\item
+  \(\Sigma\) the input alphabet
+\item
+  \(\Gamma\) a working alphabet with \(\Sigma \subseteq \Gamma\)
+\item
+  \(\square\): Blank symbols \(\in \Gamma \backslash \Sigma\)
+\item
+  transition functions
+  \(\delta: Q\times \Gamma \rightarrow Q \times \Gamma \times \{-1,0,1\}\)
+\item
+  Start state \(q_{start} \in Q\)
+\item
+  Accept state \(q_{accept} \in Q\)
+\end{itemize}
+\end{definition}
+
+
+A Turing machine simulator can be found \href{https://www.turingmachinesimulator.com}{here}\footnote{https://www.turingmachinesimulator.com}.
+
+\emph{Hint}: A Turing machine should never write blank in the middle of the
+tape.

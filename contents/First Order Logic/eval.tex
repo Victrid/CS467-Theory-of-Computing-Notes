@@ -1,0 +1,83 @@
+\section{Evaluation}
+
+$F$ evaluates to a truth value under structure $A$ as follows:
+
+\begin{itemize}
+\item
+  if \(F = P(t_1,\dots,t_k)\) , then \(A \models F\) if \((t_i)_A \in P_A\)
+\item
+  if \(F = \forall x G\), then \(A \models F\) if
+  \(\forall a \in U, A \models G [a / x] \)
+\item
+  if \(F = \exists x G\), then \(A \models F\) if \(\exists a \in U, A \models G[a / x]\)
+\end{itemize}
+
+Example:
+
+Let $A$:
+
+\begin{itemize}
+\item
+  \(A_1\): \(\forall x, \neg L(x,x)\)
+\item
+  \(A_2\): \(\forall x, L(x,S(x))\)
+\item
+  \(A_3\): \(\forall x\forall y, L(x,y) \rightarrow L(x, S(y))\)
+\item
+  \(A = A_1 \land A_2 \land A_3\)
+\end{itemize}
+
+The structure satisfying $A$:
+
+\begin{itemize}
+\item
+  \((\mathbb{N}, L:x,y \rightarrow x<y,S: x \rightarrow x+1)\)
+\item
+  \((2\times\mathbb{N}, L:x,y \rightarrow x<y,S: x \rightarrow x+2)\)
+\end{itemize}
+
+Let \(A_4: \forall x, L(e, S(x))\) For \(B = A \land A_4\), is $B$ transitive?
+
+No.
+
+\begin{itemize}
+\item
+  Multiple ``0'' solution
+\item
+  Vector Argument solution
+\end{itemize}
+
+Every model for B is infinite. (If finite, success function will form a
+circle.)
+
+\begin{definition}[Model]
+Structure $M$, formula $F$, $M \models F$ means $M$ is a \emph{model} for $F$.
+\end{definition}
+
+\begin{definition}[Satisfiable]
+If $F$ has at least $1$ model, then $F$ is satisfiable.
+\end{definition}
+
+\begin{definition}[Theorem, Valid]
+If $F$ is true under every structure $M$, i.e. every structure is a model,
+  then $F$ is valid, $F$ is a theorem.
+\end{definition}
+
+
+Define \(\exists! c G\) as
+\(\exists c G[c] \land \forall c', G[c'] \rightarrow c=c'\)
+
+Group axiom:
+
+\begin{itemize}
+\item
+  \(G_1\): \(\forall x,y,z: f(x,f(y,z))=f(f(x,y),z)\)
+\item
+  \(G_2\): \(\forall a,b, \exists! c: f(a,c)=b\)
+\item
+  \(G_3\): \(\forall a,b, \exists! c: f(c,a)=b\)
+\end{itemize}
+
+\(H\): \(\exists e, \forall x (x *e = x \land e*x=x)\)
+
+Then \(G_1\land G_2\land G_3 \rightarrow H\) is a theorem satisfying all axiom.

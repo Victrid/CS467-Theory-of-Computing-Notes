@@ -1,0 +1,90 @@
+\section{Unrestricted Grammar}
+
+\(a^nb^nc^m\) can be represented with a context-free grammar.
+
+\(A^nB^n \rightarrow a^nb^n\):
+
+\begin{verbatim}
+    BC -> bc
+    Bb -> bB
+    cC -> Cc
+\end{verbatim}
+
+Unrestricted grammar is powerful!
+
+\subsection{Proof \texorpdfstring{$L$}{L} is not a regular language}
+\(L = \{a^nb^n \mid n \ge 0\}\) is not regular.
+
+\begin{proof}[Proof with infinite states]
+Refer to proof \ref{prf:infinite-states}.
+
+If it were,there would be transition function \(\delta\):
+
+\(\delta(S,a)\), \(\delta(S, aa)\), \(\delta(S, aaa)\), ... which have
+infinite states.
+
+Regular languages and FSA only have a finite memory to process
+strings.
+\end{proof}
+
+\begin{proof}[Proof with infinite equivalent classes]
+
+\begin{definition}[Equivalent Class]
+A FSA \(A\) defines an equivalence relation
+  \(\equiv_A\) on \(\Sigma^*\) via
+  \(x\equiv_A y \Leftrightarrow \delta_A(S,x) =  \delta_A(S,y)\).
+\end{definition}
+
+\begin{observation}
+\(\forall x,y,\omega \in \Sigma^*\), if
+  \(x \equiv_A y\) then \(x\omega \equiv_A y\omega\).
+\end{observation}
+
+Whenever you have an equivalence relation \(\equiv\) on \(\Omega\), consider partitioning \(\Omega\) into equivalence classes.
+
+The index of \(\equiv\) is the number of non-empty equivalence classes.
+
+\begin{observation}
+\(\equiv_A\) has index at most \(|Q|\), where
+  \(Q\) is the set of the states.
+\end{observation}
+
+The language \(L = \{a^nb^n \mid n \ge 0\}\) have infinite equivalence
+  classes.
+
+\begin{definition}[Equivalence]
+A language \(L \subseteq \Sigma^*\) defines an
+  equivalence relation \(x \equiv_L y\) via
+  \(x \equiv_L y \Leftrightarrow \forall \omega \in \Sigma^*: (x\omega\in L \leftrightarrow y\omega \in L)\).
+\end{definition}
+
+Given L and x, define \(L_x = \{\omega | x\omega \in L\}\).
+  \(x \equiv_L y\) if \(L_x = L_y\).
+  
+\begin{observation}
+If FSA A recognizes L then
+  \(x \equiv_A y \Rightarrow x\equiv_L y\), in particular, \(\norm{\equiv_L} \le \norm{\equiv_A} \le |Q|\).
+\end{observation}
+
+\begin{theorem}[Regular and Equivalent Index]
+If \(\equiv_L\) has finite index, then L is regular.
+\end{theorem}
+
+\begin{proof}
+Equivalent classes can be derived to states. \(C_1, C_2 \in \equiv_L\),
+\(x\in C_1, x\sigma \in C_2, \sigma \in \Sigma\), then the state
+\(C_1 \overset{\sigma}{\rightarrow} C_2\).
+\end{proof}
+
+\begin{corollary}[Infinite Equivalent Index]
+ If \(\norm{\equiv_L}\) is infinite the L is not
+  regular.
+\end{corollary}
+
+index \(\norm{\equiv_L}\) is infinite means an infinite list of words, no
+  two of which are equivalent.
+
+a, aa, aaa, aaaa, ... are not equivalent in \(\equiv_L\), as
+given \(a^ib^i \in L\) and \(a^ib^j \not \in L\), so the language $L$ is not regular.
+
+\end{proof}

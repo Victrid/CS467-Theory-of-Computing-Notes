@@ -1,0 +1,235 @@
+\section{The Halting Problem}
+
+\subsection{(Turing Machine) Computable Functions}
+
+\begin{definition}[Compute]\mbox{}\par
+Let Language
+\(L(M) = \{x \in \Sigma^* | m \text{ accepts } x\}\),
+\(\text{Output}(M,x) :=\) the content of the tape of \(M\) when it halt.
+
+We say \(M\) \emph{computes} \(f: \Sigma^* \rightarrow \Sigma^*\) if:
+\begin{itemize}
+    \item
+  \(M\) halts on every \(x\);
+\item
+  \(\text{Output}(M,x) = f(x)\)
+\end{itemize}
+\textbf{Computable}: \(f\) is computable if there is a Turing Machine
+computing \(f\).
+\end{definition}
+
+\begin{theorem}[A Universal Turing Machine exists]
+Machine \(U\) over \(\Sigma = \{0,1\}\) such that on input \(x\):
+\begin{itemize}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(U\) rejects \(x\) if \(x\) is not of the form
+  \(\langle M,y\rangle\), \(y \in \{0,1\}^*\)
+\item
+  else
+
+  \begin{itemize}
+  \item
+    \(U\) accepts \(x\) \(\Leftrightarrow\) \(M\) accepts \(x\)
+  \item
+    \(U\) rejects \(x\) \(\Leftrightarrow\) \(M\) rejects \(x\)
+  \item
+    if \(M\) on \(x\) halts then \(U\) halts with \(\text{Output}(M,x)\)
+    on its last tape.
+  \end{itemize}
+\end{itemize}
+\end{theorem}
+
+\begin{definition}[Decidable]
+\(L \subseteq \Sigma^*\) is
+\emph{decidable} if exists a Turing Machine \(M\) s.t.:
+
+\begin{itemize}
+\item
+  \(L = L(M)\)
+\item
+  \(M\) halts on every input
+\end{itemize}
+\end{definition}
+
+\begin{observation}
+
+
+Computable examples
+
+\begin{itemize}
+\item
+  if \(f: \{0,1\}^* \rightarrow \{0,1\}^*\) is primitive recursive then
+  \(f\) is computable.
+\item
+  Ackerman Function is computable.
+\item
+  If a C++ program can compute \(f\) then \(f\) is computable.
+\end{itemize}
+
+Not computable examples
+
+\begin{itemize}
+\item
+  How many Turing Machines are there? (\(\mathbb{N} \sim \aleph_0\))
+\item
+  How many languages \(L \subseteq \Sigma^*\) are there?
+  (\(2^{\mathbb{N}} \sim \mathbb{R}\)).
+\end{itemize}
+\end{observation}
+
+\subsection{Kolmogorov Complexity}
+
+\begin{definition}[Kolmogorov complexity]
+Kolmogorov complexity measures how random a string is.
+
+Can be formalized as the length of shortest description
+\(\langle M\rangle x\), where \(M\) is a Turing Machine description, and
+\(x\) is the compressed words. (Like the self-extracting compressed
+archive), as
+
+$$KC(w) = \arg\min( \langle M \rangle x| U(M,x) = w)$$
+
+\end{definition}
+
+Example:
+
+\begin{itemize}
+\item
+  \(\texttt{010101010101} \rightarrow (\texttt{01})^5\)
+\item
+  \(3.1415... \rightarrow \sqrt{6 \sum_n{\frac{1}{n^2}}} (= \pi)\)
+\end{itemize}
+
+\begin{theorem}
+Kolmogorov Complexity \(KC(w)\) is not a computable
+function.
+\end{theorem}
+
+\begin{proof}
+\begin{observation}
+$KC(x)$ is never much larger than $x$. Otherwise a do-nothing Turing machine and the original can do the job.
+\end{observation}
+
+\begin{lemma}
+$\forall n, \exists x \in \{0,1\}^n$ with $KC(x) \ge n$.
+\end{lemma}
+
+\begin{proof}
+At most $2^k$ strings $k$ can be represented with $KC(y)=k$. Then $KC(y)< n$ can represent $2^{n}$.
+\end{proof}
+
+If $KC(w)$ is computable, define a function $GKC(n)$ that traverses $\{0,1\}^n$ and return one that $KC(x) \ge n$. A Turing machine computing this will have $|GKC| + \log n$ bits. And finally $|GKC| + \log n < n$. Which contradicts to the definition of $KC$.
+
+\end{proof}
+
+\subsection{The Halting Problem}
+
+Turing Machine M, as encoded $\langle M \rangle$:
+
+$$\text{\textsc{Halt}}:=\{x | M \text{ halts on }x\}$$
+
+\begin{theorem}
+Halt is undecidable.
+\end{theorem}
+
+\begin{proof}[Proof with diagonalization]
+There is no bijection
+\(f: \mathbb{N} \rightarrow \{0,1\}^\infty\).
+
+The Turing machine is countable: a surjection that $\mathbb{N}
+\rightarrow \{0,1\}^*$
+
+Assume Halt is decidable, then there is a Turing machine $T$ compute the
+halt (a diagonal table with $x$ be all Turing machines numbered, $y$ be all Turing machines, and item represents whether it holds)
+
+diagonal negation: Turing machine $\lnot D(table)$:
+
+if x $\not\in \Sigma$ : reject.
+
+if $M$ fails to hold on $x$: accept.
+
+if $M$ holds on $x$: run infinite loop.
+
+Whether $M$ halts on $x$? contradiction.
+\end{proof}
+
+
+
+\subsection{Post Correspondence
+Problem}
+
+\begin{definition}[Post Correspondence Problem]
+The definition of PCP:
+
+\begin{itemize}
+\item
+  A finite set of tile $T$,  $\tile{a}{b} \in T$ with $a,b \in \Sigma^*$.
+\item
+  For a sequence of tiles $s=s_1s_2\dots s_n$, let
+  $top(s)=a_1a_2\dots a_n$,
+  $bottom(s)=b_1b_2\dots b_n$
+\end{itemize}
+
+Is there a sequence of tiles $S$ with $top(s)=bottom(s)$?
+\end{definition}
+
+\begin{theorem}
+PCP is undecidable.
+\end{theorem}
+
+\begin{proof}
+\begin{definition}[MPCP]
+Modified PCP, where particular $t^* \in T$, where sequence must start with $t^*$.
+\end{definition}
+
+\begin{lemma}
+If we can decide PCP, we can decide MPCP. We can turn a MPCP problem into PCP problem.
+\end{lemma}
+
+\begin{proof}
+We may need to modify MPCP to make sure the first tile should always be the first tile.
+
+The new tile $t^* = \tile{1000}{100}$ becomes $\tile{*1*0*0*0}{*1*0*0*}$. 
+
+Other tiles $\tile{1000}{100}$ becomes $\tile{*1*0*0*0}{1*0*0*}$.
+
+Add a new ending tile $\tile{*\$}{\$}$. Tile $t^*$ needs to be copied as other tiles once.
+\end{proof}
+
+\begin{theorem}[Reduction from halting problem to MPCP]
+MPCP is undicidable. In particular, given a Turing machine we can translate it into a MPCP over the alphabet $\Gamma \cup Q \cup \{\#\}$ s.t.
+
+$$M \text{ holds on } x \Leftrightarrow MPCP \text{ has a solution}$$
+\end{theorem}
+
+\begin{proof}
+We construct tiles with configurations.
+
+Start configuration tile: $$\tile{\#\# q_{start}abc... \#}{\#\#}$$
+
+Current sequence tiles patch looks like $$\tile{\#\# C_0 \# \dots \# C_k\# \mathbf{u} a\mathbf{q}bc \mathbf{v} \#}{\#\# C_0 \# \dots \# C_k\#}$$
+
+We define copy tiles which copies all characters $\tile{a}{a}$ for each $a \in \Gamma$.
+
+Rule tiles:
+\begin{itemize}
+    \item for $(q,m) \rightarrow (q', n, \text{STAY})$:
+    
+    $$\tile{q'n}{qm}$$
+    
+    \item for $(q,m) \rightarrow (q', n, \text{RIGHT})$:
+    
+    $$\tile{nq'}{qm}$$
+    \item for $(q,m) \rightarrow (q', n, \text{LEFT})$:
+    
+    $$\tile{q'An}{Aqm} \text{ for all } A \in \Gamma$$
+\end{itemize}
+
+We need ending tiles to collect from the $q_{accept}$ state.
+
+$\tile{q_{accept}}{q_{accept}b}$ for each $b \in \Gamma$, and $\tile{q_{accept}\#}{a q_{accept}\#}$ for each $a \in \Gamma$.
+
+\end{proof}
+
+\end{proof}

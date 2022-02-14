@@ -1,0 +1,152 @@
+\section{Context Free Grammars*}
+
+\subsection{Ambiguity}
+
+$x+y*z$ can be computed as $(x+y)*z$ or $x+(y*z)$, if no computation order is defined.
+
+A grammar is called ambiguous if there's a word $w$ that has two
+different parse trees.
+
+\begin{example}
+Two grammars:
+
+\begin{verbatim}
+    S -> S+S | S*S | (S) | x | y | z
+\end{verbatim}
+
+\begin{verbatim}
+    E -> T | T+E
+    T -> F | F*T
+    F -> x | y | z | ( E )
+\end{verbatim}
+
+They both generate the same language, but only the second one is
+unambiguous.
+\end{example}
+
+\begin{example}
+Language \(\{a^mb^mc^n\} \cup \{a^mb^nc^n\}\), every grammar for this is
+ambiguous.
+\end{example}
+
+
+\subsection{Properties of Context Free Grammars}
+
+If \(L_1\) and \(L_2\) are context-free languages,
+then so are:
+
+\begin{itemize}
+\item
+  \(L_1 \cup L_2\)
+\item
+  \(L_1 \circ L_2\)
+\item
+  \(L_1^*\)
+\item
+  But not necessarily \(\overline{L_1}\)
+\item
+  \(L^R\), reversed. Just reverse all the rules.
+\end{itemize}
+
+But not necessarily \(L_1 \cap L_2\).
+
+\begin{observation}
+\(L_1 = \{a^mb^mc^n\}, L_2 = \{a^mb^nc^n\}\),
+  \(L_1\cap L_2 = \{a^nb^nc^n\}\), which is not context-free.
+\end{observation}
+  
+\begin{proof}
+
+  if the longest path in the parse tree is larger than the number of
+  variable symbols := q, we have
+  \(V \Rightarrow^* xVz; V\Rightarrow^* y\). (pigeon hole)
+
+  Every sufficiently long word \(\omega \in L\) can be written
+  \(\omega = axyzb\), s.t. \(ax^iyz^ib \in L\), for \(i \ge 0\).
+  (Pumping theorem)
+
+  Take a longest path in the tree:
+  \(S \rightarrow V_1 \rightarrow V_2 \cdots \rightarrow V_n \in V\)
+
+  Then count \(q+1\) steps back: \(V_{n-1}, \cdots V_{n-q-1}\)
+
+  However, we may have that
+  \(V \rightarrow XVY, X,Y \rightarrow \epsilon\).
+
+  A context-free grammar is in Chomsky normal Form if every rule is of
+  one of following forms:
+
+  \begin{itemize}
+  \item
+    \(A \rightarrow BC\)
+  \item
+    \(B \rightarrow b\)
+  \item
+    \(S \rightarrow \epsilon\), which is the start symbol.
+  \end{itemize}
+\begin{theorem}[CFG $\mapsto$ CNF]
+If \(G\) is CFG then \(\exists G'\) in CNF with
+  \(L(G) = L(G')\).
+\end{theorem}
+
+\begin{proof}
+  \begin{itemize}
+  \item
+    \(A \rightarrow BCxDE\) replace by \(A \rightarrow BCXDE\),
+    \(X \rightarrow x\)
+  \item
+    \(A \rightarrow BCDE\) replace by \(A \rightarrow NE\),
+    \(N \rightarrow BCD\) ...
+  \item
+    \(C \rightarrow \epsilon\):
+
+    Define $X$ is \emph{nullable} if \(X \Rightarrow^* \epsilon\).
+
+    Algorithm to find:
+
+    \(X_t\) := Symbol nullable with a parse tree of height \textless{}
+    t.
+
+    \(X_1 := \{ X | X \rightarrow \epsilon \}\)
+
+    \(X_{t+1} := X_t \cup X \rightarrow YZ, Y,Z \in X_t\).
+
+    Compute until \(X_{t+1} = X_t\)
+  \end{itemize}
+
+  Rule of conversion:
+
+  for \(A \rightarrow BC\):
+
+  Add \(A \rightarrow B\) if \(C\) is nullable, \(A \rightarrow C\) if
+  \(B\) is nullable.
+
+  Don't add \(A \rightarrow \epsilon\) except \(A\) is start symbol
+  which is nullable.
+
+  Now we have unary rules \(A \rightarrow B\). Delete
+  \(A \rightarrow B\) and add \(X \rightarrow BC\) when
+  \(X \rightarrow AC\) is a rule.
+
+\end{proof}
+
+% TODO
+
+If height of the tree is no less than \(q+1\), there is a path of
+length \(q+1\) with \(q+2\) vertices, where the last vertex is a leaf
+and the \(q+1\) are variable symbols.
+
+For the \(V \rightarrow V \rightarrow ... \rightarrow l\), The number
+of leaves is at most \(2^q\).
+
+If L is context free, then exists \(n\) (\(n = 2^{q+1}\), \(q\) is the
+number of var of CNF) such that every word of length
+\(|\omega| \ge n\) can be written as \(\omega = axyzb\) with
+\(|xz| \ge 1 , |xyz| \le n\), and \(ax^iyz^ib \in L, \forall i\).
+
+To proof that \(a^nb^nc^n\) is not context free, if it were, let n be
+the constant from pumping lemma: \(a^nb^nc^n = lxyzr\) so Either
+\(xyz \in {a,b}^*\) or \(\in {b,c}^*\) cannot contain all \(a, b, c\).
+
+Then \(lxyzr\) in L, \(lx^2yz^2r\) not in L, which contradicts.
+\end{proof}

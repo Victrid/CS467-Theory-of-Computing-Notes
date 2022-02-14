@@ -1,0 +1,42 @@
+\section{Boolean Operations and Pairing}
+
+\subsection{Boolean Operations}
+Define:
+
+\begin{itemize}
+\item
+  true: \(\lambda x\;y.x\)
+\item
+  false: \(\lambda x\;y.y\)
+\end{itemize}
+
+Then the if-then-else function can be defined as $$\lambda c\;t\;f.(c\;t\;f)$$ 
+
+This is of no use, as the definition itself is a function.
+
+\paragraph{Logic and $\land$} \(\lambda p\;q.(p\;q\;false)\)
+
+\paragraph{Logic or $\lor$} \(\lambda p\;q.(p\;true\;q)\)
+
+
+\subsection{Pairing}
+We define a pair (p,q) as \(\lambda p\;q\;f.(f\;p\;q)\)
+
+Represented by \(f \mapsto \text{if \(f\) then \(p\) else \(q\)}\) as
+True and False is represented above.
+
+Then the first and second can be defined as
+
+first: \((pair\;true)\)
+
+second: \((pair\;false)\)
+
+Problems: How to do recursion(and double recursion, recursion in
+general) like factorial, fibonacci? How do we do predecessor function?
+
+Using pairs. The recursive primitive in primitive recursive functions can be done with \((time\;function)\).
+
+\begin{theorem}
+All primitive recursive functions can be done in
+\(\lambda\)-calculus.
+\end{theorem}

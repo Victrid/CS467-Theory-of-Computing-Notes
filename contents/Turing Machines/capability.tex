@@ -1,0 +1,84 @@
+\section{Equivalent Capability}
+
+\subsection{Multi-tape Turing Machine}
+
+A Multi-tape Turing Machine can make the problem easier.
+
+The definition of rules needs a little adjust:
+\(\delta: Q \times \Gamma^k \rightarrow Q \times \Gamma^k \times \{L,S,R\}^k\)
+
+\begin{definition}[Equivalent]
+\(M\) accept/reject/fail to halt on $x$ if and only if \(M'\) does.
+\end{definition}
+
+\begin{theorem}
+For every \(k\)-tape Turing Machine \(M\), there exists a single tape Turing
+Machine \(M'\) with \(M \equiv M'\).
+\end{theorem}
+
+
+\begin{proof}
+Make $k$ tapes into one by gluing them together. Extend the alphabet as
+\(\Gamma_{t}' = \Gamma^k\) to indicate the tapes, and use symbols to
+make the head of each tape. The final working alphabet is
+\((\Gamma \cup \Gamma' )^k\).
+
+A $k$-tape step can be represented in single tape Turing Machine as a
+Phase.
+
+Phase steps:
+
+\begin{itemize}
+\item
+  Scan from left to right, and retrieve all marked symbols as states.
+\item
+  Calculate the edit as in the $k$-tape, and apply them.
+\end{itemize}
+
+(This can also be done, with just aligning the cursor, and shift the sub
+tape. This can save the state determination time and reduce it to
+\(O(N)\) complexity.)
+\end{proof}
+
+This shows that \(k\)-tape Turing Machines are no more powerful. 
+
+\subsection{Machines with \texorpdfstring{\(k\)}{k} stacks}
+
+This machine is more powerful. But can be simulated by a multi-tape
+Turing Machine, so by the Turing Machine.
+
+\begin{itemize}
+\item
+  every 2 stacks can be simulated by 1 tape (tape is a deque)
+\item
+  every 1 leftover stack can be simulated by one tape.
+\end{itemize}
+
+This turns the $k$-stack machine to \(\lceil\frac{k}{2}\rceil\)-tape
+Turing Machines.
+
+\subsection{Primitive recursive function}
+
+let \(f: \mathbb{N}^k \rightarrow \mathbb{N}\) be a primitive recursive
+function. Then there's a (multi-tape) Turing Machine \(M\) computing
+\(f\).
+
+Construction: Let \(M\) has \(k\) input tapes and \(1\) output tape.
+
+Primitive base functions can be constructed within turing machine:
+
+\begin{itemize}
+\item
+  \emph{Successor function}: replace the \(\square\) to \(1\), and copy
+  to output tape.
+\item
+  \emph{Projection function}: copy tape i to output.
+\item
+  \emph{Combination primitive}: use \(m\) new tapes to calculate the
+  inner computation, and use their output tape as input tapes to compute
+  the combinator.
+\item
+  \emph{Recursion primitive}: use input tapes for \(t, y_i\), two
+  working tapes for recursive result (copy and write), a tape to store
+  \(s\) from \(0\) to \(t\).
+\end{itemize}

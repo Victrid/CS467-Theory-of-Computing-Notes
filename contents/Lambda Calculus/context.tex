@@ -1,0 +1,76 @@
+\section{Context and Free
+Variable}
+
+Take three pairs of functions:
+
+\begin{align*}
+f(x):= x^2 \\
+g(y):= y^2
+\end{align*}
+
+\begin{align*}
+u(x,y):= x\circ y \\
+v(x,y):= y \circ x
+\end{align*}
+
+\begin{align*}
+m(x)=a\circ x^2\\
+n(y) = b \circ y^2
+\end{align*}
+
+Whether these function are equivalent depends on the object's property in the first equation (non-Abel group),
+and the context of \(a,b\) in the third equation.
+
+\textbf{}
+
+
+
+
+\begin{definition}[Free variable of a \(\lambda\)-term S] Define free variable as $FV$.
+\begin{itemize}
+\item
+  if \(S = x\) then \(FV(S) = \{x\}\)
+\item
+  if \(S = (A\;B)\) then \(FV(S)=FV(A) \cup FV(B)\)
+\item
+  if \(S = \lambda x.A\) then \(FV(S)=FV(A) \backslash \{x\}\)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Substitution]
+Denoting \(S[x/y]\), which means $x$ inside $S$ is substituted by $y$ where $S$ is \(\lambda\)-terms and \(y\) is variable.
+\end{definition}
+\begin{remark}
+Careful: \(f(\lambda fy.f)[f/N] = N(\lambda fy.f)\)
+\end{remark}
+
+\begin{example}
+\(A=\lambda x.y x, B=\lambda z.xz\). What is \(A[y/B]\)?
+
+Recall:
+$$f(n)=\int_0^1x^n\mathrm{d}x, f(x) \neq \int_0^1x^x\mathrm{d}x \Rightarrow f(x) = \int_0^1\hat{x}^xd\hat{x}$$
+
+$$A[y/B] = (\lambda x’.yx’)[y/\lambda z.xz]=\lambda x’.(\lambda z.xz)x’$$
+\end{example}
+
+\begin{definition}[Equivalent] We call two $\lambda$-term equivalent if they are same up to the name of bounded variables. Denoted as $\equiv$.
+\begin{itemize}
+\item
+  \(A \equiv A\)
+\item
+  if \(A \equiv B\) then \(B \equiv A\)
+\item
+  if \(A \equiv B\), \(B \equiv C\) then \(A \equiv C\)
+\item
+  if \(A \equiv A’\), \(B \equiv B’\) then \((A\;B) \equiv (A’\;B’)\)
+\item
+  if \(A \equiv B\), then \(\lambda x.A \equiv \lambda x.B\)
+\item
+  if \(y \not \in A\), then
+  \(\lambda x.A \equiv \lambda y.A[x/y]\)
+\end{itemize}
+\end{definition}
+
+
+
+

@@ -1,0 +1,21 @@
+\section{G\"{o}del Numbering \texorpdfstring{\(\mathbb{N}^* \mapsto \mathbb{N}\)}{N* ↦ N}}
+
+\begin{definition}[G\"{o}del Numbering function]
+\(\text{GN}_k: (x_1, x_2, ... , x_k) \mapsto 2^k (3^x_1 5^x_2 ...)\) is injective.
+\end{definition}
+
+\begin{observation}
+\(\text{GN}_k\) for a fixed \(k\) is primitive recursive.
+\end{observation}
+
+\begin{definition}[G\"{o}del Numbering Inversion]
+\(\text{GNI}(n,i)\) = \(x_i\) if
+\(n=\text{GN}(x_1, ..., x_k)\), \(k \ge i\) else \(0\).
+
+\(\text{GNI}(n,i) = 0\) if \(\text{GNL}(n) < i\) else
+\(\max\{ e \mid p_{i+1}^e \text{ divides } n \}\)
+
+\(\text{GNL}(n) = \max\{e\mid 2^e \text{ divides } n\}\)
+\end{definition}
+
+How to compute the $\max$?

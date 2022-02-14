@@ -1,0 +1,196 @@
+\section{Formal Languages}
+
+How can we represent a valid e-mail address?
+
+\begin{verbatim}
+    Email -> Name @ Domain
+    Name -> SingleCharacter Name
+    Name -> SingleCharacter
+    SingleCharacter -> `a' - `z', `-', `.'
+\end{verbatim}
+
+Find the BNF of Domain:
+
+\begin{verbatim}
+    NormCharacter -> `a' - `z', `-'
+    dot -> `.'
+    Leaf -> NormCharacter
+    Leaf -> NormCharacter Leaf
+    Domain -> Leaf dot Leaf
+    Domain -> Leaf dot Domain
+\end{verbatim}
+
+Restrict a valid e-mail address more formally:
+
+\begin{itemize}
+\item
+  Name not start or end with a `.'
+\item
+  Domain is a list of `.'-free names separated by `.'
+\end{itemize}
+
+The context-free grammar:
+
+\begin{verbatim}
+    E -> U @ D
+    U -> C | C C | C S C
+    S -> C | “.” | SS
+    D -> N.L
+    L -> N | N.L
+    N -> C | CN
+    C -> “a” - “z”
+\end{verbatim}
+
+\begin{definition}[Symbols]
+The symbols are defines as:
+\begin{itemize}
+    \item $\rightarrow$: Rules of grammar
+    \item $\Rightarrow$: Derivation
+    \item $\Rightarrow^*$: Final derivation
+\end{itemize}
+\end{definition}
+
+
+\(E \Rightarrow^* \text{a..b@me.cn}\)
+
+\begin{definition}[Context-free Grammars]
+Context-free grammars consists of
+\begin{itemize}
+    \item A set \(\Sigma\) of terminal symbols. 
+    
+    Example from above: \texttt{\{`a',\ `b',\ `@',\ `\_',\ `.',\ ...\}}
+    \item A set \(V\) of variable symbols.
+    
+    Example from above: \texttt{\{E,\ U,\ D\}}
+    \item A set \(R\) of rules, a rule is of the form
+\(X \rightarrow u, X \in V, u \in (\Sigma \cup V)^*\).
+
+    \item A start symbol \(S \in E\).
+    
+    Example from above: \texttt{E}
+\end{itemize}
+\end{definition}
+
+CFG defines a relation \(\Rightarrow\) on the set \((\Sigma \cup V)^*\),
+if
+\(u, w \in (\Sigma \cup V)^*, X \in V\), Exists a rule \(X \rightarrow v, uXw \Rightarrow uvw\).
+
+CFG forms like a tree, but email validation could have a simpler
+grammar:
+
+E =
+\texttt{{[}\^{}\textbackslash{}.{]}.*{[}\^{}\textbackslash{}.{]}@({[}\^{}\textbackslash{}.{]}*\textbackslash{}.)*{[}\^{}\textbackslash{}.{]}*}, which is a list.
+
+\begin{definition}[Regular Grammar]
+a context-free grammar \((\Sigma, V, R, S)\) where only
+rules in the form of \(X \rightarrow uY\) exists.
+\end{definition}
+
+\paragraph{Regular grammar for odd number of 1's}
+
+\begin{verbatim}
+    S -> 0 S | 1 D
+    D -> e | 0 D | 1 S
+\end{verbatim}
+
+\paragraph{Context free grammar for more 1's than 0's}
+
+\begin{verbatim}
+    E -> e | 0 E 1 E | 1 E 0 E 
+    B -> 1 B | 1 E | 0 E 1 B
+\end{verbatim}
+
+\paragraph{Context free grammar for sting containing 3n zeros}
+
+\begin{verbatim}
+    D -> 0 A | 1 D | e
+    A -> 0 B | 1 A
+    B -> 0 D | 1 B
+\end{verbatim}
+
+\paragraph{Context free grammar for more 1's than 0's, or sting containing 3n zeros}
+
+\begin{verbatim}
+    S -> E
+    S -> D
+    (with each rules above)
+\end{verbatim}
+
+\begin{theorem}[Combination]\label{th:regular-combination}
+if $A, B$ are both regular
+  languages, $A \cup B$ is regular, too.
+\end{theorem}
+
+\begin{proof}
+\(A\cup B = (\Sigma, V_A\cup V_B \cup {S}, R_A \cup R_B, S')\), assume\(V_A\) and \(V_B\) are disjoint, \(S \not \in V_A \cup V_B\).
+\end{proof}
+
+\paragraph{Context free grammar for more 1's than 0's, and sting containing 3n zeros}
+
+  Take the example of Chinese Remainder Theorem. \#1 is $0(\bmod 2)$, \#0 is
+ $0(\bmod 3)$
+
+\begin{verbatim}
+    Zero_odd = 1 Zero_even | 0 One_odd | e
+    Zero_even = 1 Zero_odd | 0 One_even
+    One_odd = 1 One_even | 0 Two_odd
+    One_even = 1 One_odd | 0 Two_even
+    Two_odd = 1 Two_even | 0 Zero_odd
+    Two_even = 1 Two_odd | 0 Zero_even
+\end{verbatim}
+
+\begin{theorem}[Common]
+If $A, B$ are regular, then \(A \cap B\)
+  is regular, too.
+\end{theorem}
+\begin{proof}
+\begin{definition}[Normal Form]
+ A regular grammar is in normal form if all rules are
+in normal form.
+
+\(P \rightarrow xQ, P \rightarrow \epsilon\) are in normal form.
+
+\(P \rightarrow x, P \rightarrow Q\) are not in normal form.
+\end{definition}
+Assume all rules are in normal form.
+
+  \begin{itemize}
+  \item
+    For \(\forall x \in \Sigma\) and rule
+    \(P_A \rightarrow xQ_A \in A\), \(P_B \rightarrow xQ_B \in B\),
+
+    Add the rule \(\tile{P_A}{P_B} \rightarrow x \tile{Q_A}{Q_B}\),
+    with start symbol \(\tile{S_A}{S_B}\). The symbol
+    \(\tile{a}{b}\) represents that the combined state of \(a\) and
+    \(b\).
+  \item
+    \(\tile{P_A}{P_B} \Rightarrow^* \omega \in \Sigma^*\) if and only
+    if \(P_A \Rightarrow^*_A \omega\) and \(\Rightarrow^*_B \omega\).
+  \item
+    If \(X \rightarrow \epsilon \in A\) and
+    \(Y \rightarrow \epsilon \in B\), then
+    \(\tile{X}{Y} \rightarrow \epsilon\).
+  \end{itemize}
+\end{proof}
+
+\begin{lemma}[Regular Grammar Normal Form]
+We can always transform a regular grammar into normal
+form.
+\end{lemma}
+
+\begin{proof} For all the rules which is not normal form:
+\begin{itemize}
+    \item For \(P \rightarrow Q\), combine all states without variation.
+    
+    Compute all triples $(P,u,X)$ with \(P \Rightarrow^* uX\),
+    \(P, X \in V, u \in \Sigma\).
+    
+    Add \(Q \rightarrow uX\) as a rule.
+    \item For \(P \rightarrow x\), expand the rule to
+\(P \rightarrow xP', P' \rightarrow \epsilon\)
+    \item For \(P \rightarrow x_1x_2\cdots x_kB\), expand the rule as
+\(A_{k-1} \rightarrow x_kA_k, k\in \{1, \cdots k\}\), with
+\(A_0 = P, A_k = B\)
+\end{itemize}
+
+\end{proof}

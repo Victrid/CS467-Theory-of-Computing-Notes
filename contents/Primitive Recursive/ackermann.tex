@@ -1,0 +1,98 @@
+\section{Non Primitive Recursive Functions}
+
+\begin{definition}[Ackermann Function]
+\begin{align*}
+    & A(0,y) &&= y+1 \\
+    & A(x+1,0) &&= A(x,1) \\
+    & A(x+1,y+1) &&= A(x,A(x+1,y))
+\end{align*}
+
+\end{definition}
+
+Ackermann function grows very fast.
+
+\begin{theorem}
+Ackermann function is not primitive recursive.
+\end{theorem}
+
+\begin{proof}
+
+\begin{lemma}
+$A_i(y) := A(i,y)$, $\forall i, A_i$ is primitive recursive.
+\end{lemma}
+
+\begin{proof}
+We have that $A_0 =succ$ is primitive recursive.
+
+\begin{align*}
+A_{i+1}(y) = \left\{
+    \begin{aligned}
+        & A_i(1) && y=0 \\
+        & A_i(A_{i+1}(y-1)) && y \ge 1
+    \end{aligned}
+\right.
+\end{align*}
+
+If $A_i$ primitive recursive, then $A_{i+1}$ is primitive recursive.
+\end{proof}
+
+
+Goal: $\forall$ primitive recursive $f,\exists
+i$ s.t. $A_i$ grows faster than $f$.
+
+\begin{definition}[dominate]
+$h: \mathbb{N} \rightarrow \mathbb{N}, f:\mathbb{N}^k \rightarrow N$, we say $h$ eventually dominates $f$ if $\exists n \in \mathbb{N}$ s.t. $f(\arr{x}) < h(\max(\arr{x},n)) = h(\norm{\arr{x}n})$.
+
+We notate that $\norm{\arr{x}} := \max |x_i|$, $\norm{\arr{x}n} := \max(\arr{x}, n)$.
+
+We notate that $f \succ g$ if $f$ dominates $g$.
+\end{definition}
+
+Goal:$\forall$ primitive recursive $f,\exists
+i$ s.t. 
+
+$A_i$ dominates $f$, i.e. $\exists i,n, A_i(\norm{\arr{x}n}) > f(\arr{x})$ for all $\arr{x}$.
+
+$f$ is a basic primitive recursive function. We have that $A_1 \succ f$.
+
+For combination $f=g(h_1(x), ..., h_k(x))$, assume $A_g \succ g$, $A_i \succ h_i$.
+
+We define $$A_I \succ g, h_1, \dots, h_k\text{, where }I = \max\{g, i\}$$.
+
+Then $$f \prec A_i(\max(A_i(\norm{xn}),n)) \preceq A_i(A_i(\norm{xn}))$$
+
+We also have $A_{i+1}(y) = A_i(A_{i+1}(y-1)) \le A_i(A_i(y))$, then $f \prec A_{I+1}$.
+
+For primitive recursion $f = Rec(g,h)$. assume $A_I \succ g,h$. $f(0,x) = g(x) \le A_I(\norm{xn})$.
+
+$$f(t+1,x) = h(f(t,x),t,x) < A_I(\max(n, f(t,x), t, x))$$
+
+
+\begin{lemma}
+If $f = Rec(g,h)$, $A_I \succ g,h$, then $A_I^{t+1}(\norm{xn}) > f(t,x)$.
+\end{lemma}
+
+\begin{proof}
+Induction by $t$.
+
+$$f(t+1,x) < A_i(\max(n, f(t,x), t, x)) \le A_i(\max(n, A_i^{t+1}(\norm{xn}),t,x))$$
+
+$$A_i(\max(n, A_i^{t+1}(\norm{xn}),t,x)) = A_i(A_i^{t+1}(\norm{xn})) = A_i^{t+2}(\norm{xn})$$
+\end{proof}
+
+\begin{lemma}
+$A_{i}^{t+2}(\norm{xn}) < A_{i+2}(\norm{xnt})$.
+\end{lemma}
+
+\begin{proof}
+\begin{gather*}
+ A_{i+2}(\norm{xnt}) = A_{i+1}(A_{i+2}(\norm{xnt})) > A_{i+1}(A_{2}(\norm{xnt}))\\
+ A_{i+1}(A_{2}(\norm{xnt})) = A_{i+1}(2\norm{xnt} +3) \ge A_{i+1}(\norm{xn}+t+2) \\
+ A_{i+1}(\norm{xn}+t+2) = A_{i}(A_{i+1}(\norm{xn}+t+1))\\
+ = A_i(A_i(A_{i+1}(\norm{xn}+t)))\\
+ \cdots = A^{t+2}(A_{i+1}(y)) \ge A_i^{t+2}(\norm{xn})
+\end{gather*}
+\end{proof}
+
+Then $A_{i+2} \succ Rec(g,h)$.
+\end{proof}

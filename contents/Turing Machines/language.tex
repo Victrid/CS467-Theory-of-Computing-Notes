@@ -1,0 +1,27 @@
+\section{Language Definition}
+
+\begin{definition}[Accept, Reject]A Turing machine \(M\):
+\begin{itemize}
+\item
+  Accepts \(x\) if
+  \(q_{start}x \overset{\delta}{\rightarrow}^* y q_{accept}z\)
+\item
+  Rejects \(x\) if
+  \(q_{start}x \overset{\delta}{\rightarrow}^* y q_{reject}z\)
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Halts]
+We call \(M\) \emph{halts} on \(x\) if $M$ accepts or rejects $x$, otherwise
+we say \(M\) \emph{fails to halt} on \(x\).
+\end{definition}
+
+\begin{definition}[Language]
+Define the Language
+\(L(M) = \{x \in \Sigma^* \mid M \text{ accepts } x\}\).
+
+We say \(M\) \emph{recognizes} \(L \in \Sigma^*\) if \(L = L(M)\).
+
+We say \(M\) \emph{decides} \(L\) if \(L = L(M)\) and \(M\) halts on
+every input \(x \in \Sigma^*\).
+\end{definition}

@@ -1,0 +1,63 @@
+\section{G\"{o}del Numbering Arithmetic}
+
+Let $\langle x_1, x_2,\dots, x_k \rangle$ denote $GN(x_1, ..., x_k)$.
+
+\paragraph{Pop head} $\langle x_1, x_2,\dots, x_k \rangle \rightarrow \langle  x_2,\dots, x_k \rangle$.
+
+\begin{theorem}[GN Pop Primitive Recursive]
+Pop is primitive recursive.
+\end{theorem}
+
+\begin{proof}
+We also have Bounded Product primitive recursive.
+
+$pop = \prod_{i=2}^k p_i^{x_i} \cdot 2^{k-1}$
+\end{proof}
+
+\paragraph{Append} $\langle x_1, x_2,\dots, x_k \rangle, y \rightarrow \langle  x_2,\dots, x_k, y\rangle$.
+
+\begin{theorem}[GN Append Primitive Recursive]
+Append is primitive recursive.
+\end{theorem}
+
+\begin{proof}
+$Append = 2 \cdot s \cdot Prime^y(GNL(s) +2)$
+\end{proof}
+
+\paragraph{Concatenate} $s: \langle x_1,\dots,x_k\rangle$ and $t: \langle y_1,\dots,y_k\rangle $
+
+$\text{GNC}(s,t) =
+ \langle x_1,\dots,x_k,y_1,\dots,y_k\rangle$.
+
+\begin{theorem}[GN Concatenate Primitive Recursive]
+Concatenate is primitive recursive.
+\end{theorem}
+
+\begin{proof}
+\begin{gather*}
+    cat(0,s,t) = s\\
+    cat(i+1,s,t)=append(cat(i,s,t), GNI(t,i))\\
+    cat(s,t) = cat(GL(t),s,t)
+\end{gather*}
+\end{proof}
+
+\paragraph{Prime Number Indexing}
+
+\begin{align*}
+& Prime(1) &&= 2\\
+& Prime(k+1) &&= \text{smallest prime in } \{Prime(k)+1, ..., Prime(k)!+1\} 
+\end{align*}
+
+Function $isPrime(t)$ is primitive recursive. It is equivalent to $maxFactor(t) = 1$, and $maxFactor$ can be defined with bounded max $P(t,b) = [t/b*b = t]$.
+
+Can also limit it to \(2\cdot Prime(k)\) with Chebyshev prime theorem.
+
+\begin{quote} 
+Chebyshev said it
+
+And I said it again
+
+There is always a prime
+
+between $n$ and $2n$
+\end{quote}

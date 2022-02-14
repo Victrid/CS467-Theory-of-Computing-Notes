@@ -1,0 +1,40 @@
+\section{Definition}
+
+Primitive recursive functions are defined on
+\(\mathbb{N}^k \rightarrow \mathbb{N}\).
+
+Basic primitive recursive functions:
+
+\begin{itemize}
+\item
+  Successor function: \(x \rightarrow x+1\)
+\item
+  Zero function \(\mathbb{N}^k \rightarrow 0\)
+\item
+  Projection function \((x_1, x_2, x_3, \dots) \rightarrow x_i\)
+\end{itemize}
+
+\begin{definition}[Combination]
+\(f\) is an \(m\)-ary functions and \(g_1\), \(g_m\) are
+\(k\)-ary functions, all of them are primitive recursive. Then
+combination \(C(f,g_1,\dots,g_m)\) denotes the \(m\)-ary function
+defined by \(x \mapsto f(g_1(x), g_2(x), \dots, g_m(x))\).
+\end{definition}
+
+Combination operations are Primitive Recursive.
+
+If \(x\) are not the same for each \(g\): use projection functions to map them.
+
+\begin{definition}[Recursion]
+let \(g: \mathbb{N}^k \rightarrow \mathbb{N}\),
+\(h: \mathbb{N}^{k+2} \rightarrow \mathbb{N}\). We can define the
+recursion function \(f: \mathbb{N}^{k+1} \rightarrow \mathbb{N}\):
+$$
+f(t,\mathbf{x}) = \left\{\begin{aligned}& g(\mathbf{x}), && t = 0\\
+& h(f(t-1,\mathbf{x}), t-1, \mathbf{x}), && t > 0
+\end{aligned}
+\right.
+$$
+\end{definition}
+
+Recursion operations are primitive recursive.

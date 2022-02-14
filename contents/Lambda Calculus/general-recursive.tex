@@ -1,0 +1,35 @@
+\section{Fixed Points and General
+Recursing}
+
+We have arithmetic fix points like 0 and 1 in \(x \mapsto x^2\). Do we have function fix points?
+
+\begin{definition}[The fixed point in the \(\lambda\)-term]
+Let \(F\) be a \(\lambda\)-term. A \(\lambda\)-term P is a fixed point of \(F\) if
+\((F\;P),P\) both \(\beta\)-reduce to the same thing.
+\end{definition}
+
+\begin{theorem}[Church-Rosser]: If \(F \twoheadrightarrow^{\beta} g\)
+and \(F \twoheadrightarrow^{\beta} h\) then \(g = h\).
+\end{theorem}
+
+This shows that \(\beta\)-reduction has the confluence property. Different paths
+starting from the same start point will end in the same.
+
+\begin{theorem}
+ Every \(\lambda\)-term \(F\) has a fixed point \(T\).
+\end{theorem}
+
+\begin{definition}[Turing Fixed Point]
+\(A = \lambda x\;y.y(x\;x\;y), \TFP = (A\;A)\)
+\end{definition}
+
+\begin{example}
+\begin{gather*}
+  \text{Fact} = \lambda x. \text{ifthenelse}\;x\;\hat{1}\;(\text{mult}\;x\; (\text{Fact}\;(-\;x\;\hat{1})))\\
+  \intertext{\centering Extract the Fact out:}
+  \text{Fact\_RHS} = \lambda F x. \text{ifthenelse}\;x\;\hat{1}\;(\text{mult}\; x\;(F\;(-\;x\;\hat{1})))\\
+  \text{FactorialRec} = (\TFP, \text{Fact\_RHS})
+\end{gather*}
+\end{example}
+
+Where FactorialRec is exactly Fact function. Fixed-point function will get the fixed point (in this is the $F$) of a function.

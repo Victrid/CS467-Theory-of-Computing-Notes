@@ -1,0 +1,44 @@
+\section{Time and Space Usage}
+
+Assume \(x \in \Sigma^*\),
+
+\begin{definition}[Deterministic Turing Machine Time and Space]
+For deterministic Turing machine $M$:
+\begin{itemize}
+\item
+  \(\text{Time}(M,x)\) be the number of steps until \(M\) halts.
+\item
+  \(\text{Space}(M,x)\) be the maximum number of non-\(\square\) cells,
+  in the whole run of the computation.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Non-deterministic Turing Machine Time and Space]
+For non-deterministic Turing machine $M$:
+\begin{itemize}
+\item
+  \(\text{Time}(M,x)\) be the length of shortest path from start config
+  to an accepting configuration. (Rejection leads to \(\infty\))
+\item
+  \(\text{Space}(M,x)\) be the maximum number of non-\(\square\) cells,
+  lever the whole run of the computation.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+Both results can be infinite.
+\end{remark}
+
+
+\textbf{Example}:
+
+For \(k\)-tape Turing Machine, how long does 1 phase of \(M'\) take
+simulating 1 step of \(M\)?
+
+$$\text{Time}(M',x) = O(\text{Time}(M,x)\times \text{Space}(M,x))$$
+
+For a Turing Machine \(M'\) equivalent to a non-deterministic Turing
+Machine \(M\), let \(d\) is the maximum number of choices in any
+transition:
+
+$$\text{Time}(M',x)=O(Td^T)\text{, where }T = \text{Time} (M,x)$$

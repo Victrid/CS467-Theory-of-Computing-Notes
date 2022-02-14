@@ -1,0 +1,36 @@
+\section{Evaluating/Reducing \texorpdfstring{\(\lambda\)}{λ}-Terms: \texorpdfstring{\(\beta\)}{β}-Reduction}
+
+\begin{definition}[$\beta$-reduction]
+$\beta$-reduction is performed as 
+$$(\lambda x.(f\;x)) y \rightarrow^{\beta} (f\;y)$$
+\end{definition}
+
+\begin{example}
+A reduction:
+
+\begin{align*}
+&(\lambda f x.(x f))(\lambda g. g)(\lambda a.a)\\
+\rightarrow^{\beta} &(\lambda x.(x (\lambda g.g)))(\lambda a.a)\\
+\rightarrow^{\beta} &(\lambda a.a)(\lambda g.g) \\
+\rightarrow^{\beta} &\lambda g.g
+\end{align*}
+\end{example}
+
+\begin{definition}[redex]
+\(A\rightarrow_{\beta} B\) then B is called redex.
+\end{definition}
+
+\begin{definition}[reduct]
+\(A \rightarrow^*_{\beta} B\), if B cannot be reduced further, B is
+called reduct. 
+
+Also denoted as \(A \twoheadrightarrow^{\beta} B\).
+\end{definition}
+
+
+
+\(\beta\)-reduction does not necessarily terminate.
+
+\begin{example}$\beta$-reducing \((\lambda x.(x\;x)) (\lambda x.(x\;x))\) will remain the same, while $\beta$-reducing \((\lambda x.(x\;x)) (\lambda y. ((y\;y)y))\) will grow larger every reduction.
+\end{example}
+

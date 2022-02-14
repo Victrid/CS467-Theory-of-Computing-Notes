@@ -1,0 +1,47 @@
+\section{Relationship between \texorpdfstring{$\mathbb{N}, \mathbb{Z}, \mathbb{Q}$}{N, Z, Q}}
+
+\begin{theorem}
+[\(\mathbb{N}_0 \cong \mathbb{Z}\)]
+\end{theorem}
+
+\begin{proof}
+$$n \mapsto (-1)^n\left\lfloor \frac{n+1}{2}\right\rfloor$$ We can well-order
+\(\mathbb{Z}\).
+\end{proof}
+
+\begin{theorem}
+[\(\mathbb{Q} \cong \mathbb{N}\)]
+\end{theorem}
+
+\begin{proof}
+For \(\mathbb{Q} \rightarrow \mathbb{N}\):
+
+We have
+\(\mathbb{N}\times \mathbb{N}\mapsto \mathbb{N}\)
+(\((x,y) \mapsto \binom{x+y+1}{2} + x\) by table mapping) and
+\(\mathbb{Q} \mapsto \mathbb{N}\times \mathbb{N}\)
+(\((x,y) \rightarrow x/y\)).
+
+However, duplicated items could be found in the table from
+\(\mathbb{Q}\) to \(\mathbb{N}\times \mathbb{N}\). We need to snake through the
+table but omit those where \(\gcd > 1\). The result doesn't matter as \(\mathbb{N}\times \mathbb{N}\) is larger as the injective image.
+
+For \(\mathbb{N} \rightarrow \mathbb{Q}\):
+
+The identity function is enough.
+
+\begin{theorem}[Schr\"{o}der-Bernstein]\label{th:shroeder}
+If \(A \le B\) and \(B \le A\) then \(A \cong B\).
+\end{theorem}
+
+\end{proof}
+
+\begin{theorem}
+[\(\mathbb{N}^m \cong \mathbb{N}, m \in \mathbb{N}\)]
+\end{theorem}
+
+\begin{proof}
+We can present \(\mathbb{N}^m\) through $m$-dimensional tables, where \(m\) is constant.
+
+\(\mathbb{N}^k \rightarrow \mathbb{N}^{k-1} \rightarrow^* \mathbb{N}\times \mathbb{N} \rightarrow \mathbb{N}\)
+\end{proof}

@@ -1,0 +1,40 @@
+\section{\texorpdfstring{\(\lambda\)}{λ}-calculus}
+
+
+
+\begin{definition}[\(\lambda\)-term]
+We have an indefinite supply of variables. A \(\lambda\)-term is either:
+
+\begin{itemize}
+\item
+  A variable \(f\)
+\item
+  An application \((A B)\), \(A,B\) are \(\lambda\)-terms, means
+  \(A \leftarrow B\)
+\item
+  An abstraction \((\lambda x.A)\) where x is a variable, \(A\) is a
+  \(\lambda\)-term.
+\end{itemize}
+\end{definition}
+
+
+Question: Define a function that reads two input values and outputs the second one?
+
+Here we have more than 1 input variable, but the abstraction can only
+accept 1 input.
+
+\((\lambda x.(\lambda y.y))\)，taking the first variable to generate the
+function that aims taking the second variable.
+
+\textbf{Syntactic sugars}:
+
+\begin{itemize}
+\item
+  \(\lambda x\;y.A\) instead of \(\lambda x.(\lambda y.A)\)
+\item
+  \(f:=(\lambda x\;y.A)\), write \((f\; s\; t)\) instead of
+  \(((f\;s)t)\)
+\item
+  Drop the outermost parentheses. Write \(\lambda x.(f\;x)\) instead of
+  \((\lambda x. (f\; x))\)
+\end{itemize}

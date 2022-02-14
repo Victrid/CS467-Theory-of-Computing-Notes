@@ -1,0 +1,72 @@
+\section{Schr\"{o}der Bernstein
+Theorem}
+\begin{proof}
+
+Let \(f: A\rightarrow B\), \(g: B \rightarrow A\) both injective.
+
+\(f, g\) defines a directed graph: vertexes: \(A\cup B\), directed edge
+\(f \cup g\)
+
+This graph has every vertex \(d_{out} = 1\) and \(d_{in} \le 1\).
+
+There are 4 types of connected components:
+
+\begin{itemize}
+\item
+  cycles
+\item
+  Z component (infinite, with no start and end)
+\item
+  A starters
+\item
+  B starters
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[c]{0.3\textwidth}
+         \centering
+         \def\svgwidth{0.75\textwidth}
+        \input{figures/shroder-circle.pdf_tex}
+         \caption{Cycles}
+     \end{subfigure}
+     \begin{subfigure}[c]{0.3\textwidth}
+         \centering
+         \def\svgwidth{\textwidth}
+        \input{figures/shroder-zcomponent.pdf_tex}
+         \caption{Z component}
+     \end{subfigure}
+
+\begin{subfigure}[c]{0.3\textwidth}
+         \centering
+         \def\svgwidth{\textwidth}
+        \input{figures/shroder-astarters.pdf_tex}
+         \caption{A starters}
+     \end{subfigure}
+     \begin{subfigure}[c]{0.3\textwidth}
+         \centering
+         \def\svgwidth{\textwidth}
+        \input{figures/shroder-bstarters.pdf_tex}
+         \caption{B starters}
+     \end{subfigure}
+     
+\caption{4 Connected Components}
+\end{figure}
+
+Squares are from \(A\), circles are from \(B\). solid edges are
+from \(f\), dashed edges are from \(g\).
+
+We can construct a bijective function \(A \mapsto B\): (Taken as bold edges):
+
+\begin{itemize}
+\item
+  for cycles we take all \(f\) edges
+\item
+  for Z component we take all \(f\) edges
+\item
+  for A starters we take all \(f\) edges
+\item
+  for B starters we take all \(g\) edges reversely (\(g^{-1}\))
+\end{itemize}
+
+\end{proof}

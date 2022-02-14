@@ -1,0 +1,49 @@
+\section{Natural Numbers Arithmetic}
+
+\paragraph{Addition}
+
+$$
+add(t,\mathbf{x}) = \left\{\begin{aligned}& P_0(\mathbf{x}), && t = 0\\
+& succ(f(t-1,\mathbf{x})), && t > 0
+\end{aligned}
+\right.
+$$
+
+\paragraph{Multiplication}
+
+$$
+mul(t,\mathbf{x}) = \left\{\begin{aligned}& zero(\mathbf{x}), && t = 0\\
+& add(f(t-1,\mathbf{x}), P_0(\mathbf{x})), && t > 0
+\end{aligned}
+\right.
+$$
+
+\paragraph{Exponentiation}
+
+$$
+\exp_{rev}(t,\mathbf{x}) = \left\{\begin{aligned}& succ(zero(\mathbf{x})), && t = 0\\
+& mul(f(t-1,\mathbf{x}), P_0(\mathbf{x})), && t > 0
+\end{aligned}
+\right.
+$$
+
+$$
+\exp(\mathbf{x}) = \exp_{rev}(P_1(\mathbf{x}), P_0(\mathbf{x}))
+$$
+
+\paragraph{Branching}
+
+$$
+ifThenElse(t,\mathbf{x}) = \left\{\begin{aligned}& P_1(\mathbf{x}), && t = 0\\
+& P_0(\mathbf{x}), && t > 0
+\end{aligned}
+\right.
+$$
+
+Problem: We can only do numbers calculation. How to process lists?
+
+\paragraph{Pairing Function} As in chapter \ref{chap:set-theory}. Use table mapping $\mathbb{N} \times \mathbb{N} \mapsto \mathbb{N}$.
+
+\paragraph{Fibonacci}
+
+\[step(paired) = pair(first(paired), second(paired)+first(paired))\]

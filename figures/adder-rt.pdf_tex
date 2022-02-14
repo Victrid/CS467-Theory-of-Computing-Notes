@@ -1,0 +1,85 @@
+%% Creator: Inkscape 1.1.1 (3bf5ae0d25, 2021-09-20, custom), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'adder-rt.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{174.75bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.03862661)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{adder-rt.pdf}}%
+    \put(0.73819742,0.39914163){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Adder\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{adder-rt.pdf}}%
+    \put(0.60944206,0.18454936){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$x_0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{adder-rt.pdf}}%
+    \put(0.73819742,0.05579399){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$y_0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{adder-rt.pdf}}%
+    \put(0.93133047,0.18454936){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{adder-rt.pdf}}%
+    \put(0.43776824,0.57081545){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Adder\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{adder-rt.pdf}}%
+    \put(0.30901288,0.18454936){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$x_1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{adder-rt.pdf}}%
+    \put(0.43776824,0.05579399){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$y_1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{adder-rt.pdf}}%
+    \put(0.80257511,0.95708155){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$z_0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{adder-rt.pdf}}%
+    \put(0.19742489,0.74248927){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Adder\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{adder-rt.pdf}}%
+    \put(0.52360515,0.95708155){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$z_1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{adder-rt.pdf}}%
+    \put(0.20171674,0.05579399){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$y_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{adder-rt.pdf}}%
+    \put(0.07296137,0.18454936){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$x_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{adder-rt.pdf}}%
+    \put(0.2832618,0.95708155){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$z_2$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{adder-rt.pdf}}%
+    \put(0.07296137,0.95708155){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$z_3$\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,190 @@
+
+\section{Finite State Automata}
+
+\begin{definition}[Deterministic Finite State Automaton]\label{def:dfsa}
+A deterministic finite state automaton consists of:
+
+\begin{itemize}
+\item \(\Sigma\) input alphabet
+\item \(V\) set of states
+\item \(S\in V\) a start state
+\item \(A \subset V\) a set of accepting states
+\item Transition function \(\delta: V \times \Sigma \rightarrow V\)
+\end{itemize}
+\end{definition}
+
+
+Multi step transition \(\delta\) generalize to a function
+\(\overset{\sim}{\delta}: V \times \Sigma^* \rightarrow V\) with
+\(\overset{\sim}{\delta}(X, \epsilon) = X, \overset{\sim}{\delta}(X, a\omega)=\overset{\sim}{\delta}(\delta(X,a), \omega)\)
+
+\begin{definition}[DFSA Accept, Recognize]
+A DFSA accepts \(\omega \in \Sigma^*\) if
+\(\overset{\sim}{\delta}(S, \omega) \in A\), a DFSA recognizes the language
+\(\{\omega \in \Sigma^* | \text{FSA accepts }\omega\}\)
+\end{definition}
+
+\begin{definition}[non-deterministic FSA]
+A non-deterministic finite state automaton consists of:
+\begin{itemize}
+\item
+  \(\Sigma\) input alphabet
+\item
+  \(V\) set of states
+
+\item
+  \(S\subset V\) a set of start states
+\item
+  \(A \subset V\) a set of accepting states
+  \item
+  \(\delta \subset V \times \Sigma \times V \rightarrow V\),
+  transition function set representing ``can go'' (non-deterministic) states
+\end{itemize}
+\end{definition}
+
+\begin{definition}[NSA accepts]
+An NSA accepts \(\omega \in \Sigma^*\) if \(\exists A \in S, B \in A\),
+s.t. \(A \overset{\omega}{\rightarrow} B\).
+\end{definition}
+
+
+\subsection{FSA and Regular Languages}
+
+\begin{theorem}
+The language recognized by a FSA is regular.
+\end{theorem}
+
+\begin{proof}
+For \(A \overset{x}{\rightarrow} B\) (\(\delta(A,x)=B\)) in automaton,
+there is a grammar \(A \rightarrow xB\).
+\end{proof}
+
+\begin{theorem}
+If \(L \subset \Sigma^*\) is a regular language then
+there is a FSA recognizing it.
+\end{theorem}
+
+\begin{proof}
+First we try to directly convert regular language to FSA:
+\begin{itemize}
+    \item Variables $V \sim$ states.
+    \item \(D \rightarrow \epsilon \sim\) accepting states.
+    \item start symbol \(E\sim\) start state.
+    \item \(A \rightarrow xB \sim\) \(A \overset{x}{\rightarrow} B\)
+(\(\delta(A,x)=B\)).
+\end{itemize}
+
+However, this is not a DFA!
+\begin{observation}
+Rules like
+\begin{verbatim}
+    C -> cD
+    C -> cC
+\end{verbatim}
+The constructed \(\delta(C,c)\) have multi values.
+\end{observation}
+
+Direct translation constructs a non-deterministic finite state automata.
+
+\subsection{Constructing FSA from a NSA}
+
+For a NSA
+\((V, S \subset V, A \subset V, \delta \subset V \times \Sigma \rightarrow V)\):
+
+Construct FSA:
+\((V' = \mathcal{P}(V), S' = {S} \in \mathcal{P}(V), A' = \{\omega \in V \mid \omega \cap V' \ne \emptyset \}, \delta(\{A_1, \cdots, A_k\}, x) = \cup (\delta(A_i,x)))\)
+\end{proof}
+
+\begin{corollary}
+If L is regular then so is
+\(\bar{L} = \Sigma^* \backslash L\).
+\end{corollary}
+
+\begin{proof}
+DFA \((V,S,A,\delta) = \lnot (V,S,V\backslash A, \delta)\)
+\end{proof}
+
+When NSA have \(s\) states, with our construction, FSA will have no more
+than \(2^s\) states.
+
+Example: \(L\subset \{0,1\}^*\), with the 4th last bit be 1.
+
+Construct with last 4 bit input ``shift'' automata, need 16 states.
+
+\begin{theorem}
+A FSA recognizing \(L_k \subset \{0,1\}^*, x_{-k}=1\) needs at
+least $2^k$ states.
+\end{theorem}
+
+\begin{proof}
+suppose having less than $2^k$ states:
+
+
+\(\exists x,y \in \{0,1\}^i, x \ne y, \delta(S,x)=\delta(S,y)\).
+
+Construct a sentence: \(x\omega = u0\omega, y\omega = u'1\omega\), \(|\omega|=k-1\). 
+
+If \(x,y\) cannot be distinguished by \(\delta(S,\cdot)\), \(x\omega, y\omega\) could not be determined.
+\end{proof}
+
+\subsection{Proof \texorpdfstring{$L$}{L} is not a regular language (state
+overflow)}
+
+\(L \in \{0,1\}^*\) has the same number of 1's and 0's. The BNF can be defined as:
+\begin{verbatim}
+    S -> 0 S 1 S | 1 S 0 S | e
+\end{verbatim}
+
+Proof $L$ is not a regular language.
+\begin{proof}\label{prf:infinite-states}
+Suppose L is regular having FSA of $s$ states, consider
+\(\{1, 11,\cdots, 1^{s+1}\}\).
+
+$$\exists 1 \le i < j, \delta(S, 1^i) = \delta(S, 1^j) \text{ (The Pigeon hole)}$$
+
+\(\delta(S, 1^i0^i)=\delta(S, 1^j0^i)\), which contradicts as
+\(1^j0^i \not \in L\).
+\end{proof}
+
+\subsection{Regular Language and Regular Expressions}
+
+If \(L_1\), \(L_2\) are regular then so are
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(L_1\cup L_2\)
+\item
+  \(\overline{L_1}=\Sigma^* \backslash L_1\)
+\item
+  \(L_1 \cap L_2\)
+
+  Can be also proved by
+  \(\overline{\overline{L_1} \cup \overline{L_2}}\) with 1 and 2.
+\item
+  \(L_1\circ L_2\) if \(A \rightarrow \epsilon \in S(L_1)\), replace
+  with \(A \rightarrow \text{\texttt{\_\_start\_\_}}(L_2)\).
+\item
+  \(L_1^*\)
+\end{enumerate}
+
+\begin{definition}[Regular Expression]
+Expression $R$ is regular expression, if:
+\begin{itemize}
+\item
+  $R$ is a symbol \(c \in \Sigma\)
+\item
+  $R$ is the empty string \(\epsilon\)
+\item
+  $R$ is \(R'^*\), where \(R'\) is regular expression
+\item
+  $R$ is \(R_1\circ R_2\), where \(R_1,R_2\) is regular expression
+\item
+  $R$ is \(R_1 \cup R_2\), also written as \((R_1 | R_2)\)
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Kleene]
+Every regular language has an equivalent regular
+expression.
+\end{theorem}

@@ -1,0 +1,31 @@
+\section{Configuration of a Turing Machine}
+
+\begin{definition}[Configuration] A configuration of Turing Machine is a finite string
+\(c \in \Gamma^*\circ Q\circ \Gamma^*\).
+\end{definition}
+
+
+Start configuration: \(\mathbf{q}_{start}abc\dots\).
+
+\(c\) is a tape with start position, which looks like
+$$\cdots \square \square y_1 y_2 \cdots y_s \mathbf{q}_i y_{s+1} \cdots y_t \square \square \cdots$$
+which means start pointer is pointed to \(y_{s+1}\) and current state is $q_i$.
+
+Transition functions \(\delta\) then defines a function $\delta: \Gamma^* \circ Q \circ \Gamma^* \rightarrow \Gamma^* \circ Q \circ \Gamma^*$. (An extension is applied to \(y_i\) that the
+non-existent component is defaulted by \(\square\).)
+
+\begin{align*}
+\dots y_{s-1}\mathbf{q} y_s\dots \overset{\delta}{\rightarrow} \left\{\begin{aligned}
+&\dots y_{s-1}\mathbf{q'} y_s' \dots, & \delta(y_s, q) = (y_s', q', S)\\
+&\dots y_{s}'\mathbf{q'} y_{s+1} \dots, & \delta(y_s, q) = (y_s', q', R)\\
+&\dots \mathbf{q'} y_{s-1} y_{s}' \dots, & \delta(y_s, q) = (y_s', q', L)\\
+\end{aligned}\right.
+\end{align*}
+
+\begin{observation}
+\(\delta\) in this configuration definition is primitive recursive (with G\"{o}del Numbering).
+\end{observation}
+
+\begin{remark}
+Here $\delta$ is infinite, however the rule set in Turing machine definition is finite. We use $q_{reject}$ to fill the function as rule set in the definition does not include rejection.
+\end{remark}

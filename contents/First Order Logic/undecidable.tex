@@ -1,0 +1,101 @@
+\section{Validity is Undecidable}
+
+\begin{theorem}[Undecidable First Order Logic]
+Validity of First Order Logic sentences is undecidable.
+
+There is no Turing machine $M$ that always halts and accepts \(x\) if and only if \(x\) is a valid sentence in First Order Logic.
+\end{theorem}
+
+\begin{theorem}[G\"{o}del's Incompleteness]
+Validity of first order logic sentences is semi-decidable.
+
+There is a Turing machine \(M\) that \(M\) accepts \(x\) if and only if \(x\) is a
+sentence in first order logic and is valid. (But might fail to halt if it is not valid)
+\end{theorem}
+
+\begin{proof}
+
+As proved in Post Correspondence Problem: A Turing Machine and an input
+string can be defined as a tile set, and the machine halts if and only if $T$ has a
+solution.
+
+We now prove that first order logic can determine whether PCP has a solution.
+
+Let PCP defined over \(\Sigma = \{0,1\}\),
+\(T = \{\tile{t_1}{b_1}, \tile{t_2}{b_2}\dots\}\), where
+\(t_i, b_i \in \{0,1\}^*\).
+
+\(T\) defines a binary relation \(P\) on \(\Sigma^*\) via \((x,y) \in P \Leftrightarrow\) Tiling \(s=(s_1,\dots,s_m) \subset T^*\)
+whith \(\text{top}(s)=x\), \(\text{bottom}(s)=y\).
+
+The first order logic to determine whether this PCP has a solution:
+
+Interpret the tile
+$$\tile{101}{10}$$
+as \(F_t = P(f_1\;f_0\;f_1\;e, f_1\;f_0\;e)\)
+
+The tile combination can be interpreted as function combination:
+$$G_t = \forall xy, P(x,y) \rightarrow P(f_a\;x, f_b\;y)$$
+
+A solution of tile set is equivalent to: \(H: \exists x, P(x,x)\)
+
+Then formula
+\(F: (\land_{t \in \text{Tiles}} (F_t \land G_t)) \rightarrow H\)
+describes whether this PCP tile set has a solution.
+
+\begin{observation}
+\(F\) is satisfiable, no matter the PCP tile set has a solution.
+\end{observation}
+
+\begin{theorem}
+$F$ is valid $\Leftrightarrow$ PCP has a solution.
+\end{theorem}
+
+\begin{proof}
+
+To prove $LHS \rightarrow RHS$:
+
+\begin{lemma}\label{lm:nosol}
+if PCP has no solution then there exists a model under which
+$F$ evaluates to false.
+\end{lemma}
+
+\begin{proof}
+The structure $M$ interprets everything in the intended way but sets
+\((\epsilon, \epsilon) \not \in P_M\). 
+\end{proof}
+
+If PCP has no solution, then there is a structure M with $M \not \models F$ (lemma \ref{lm:nosol}).
+
+To proove $RHS \rightarrow LHS$:
+
+\begin{lemma}
+If PCP instance has a solution then $F$ is valid.
+\end{lemma}
+
+\begin{proof}
+
+Let $M$ be a structure. If \(\land_t(F_t\land G_t)\) evaluates to false, then $F$ evaluates to true. (As $false \rightarrow anything = true$)
+
+Else, suppose $M \models \land_t(F_t\land G_t)$. We need to show that $M \models H$.
+
+Proposition: if \(s = (s_1,\dots,s_n), s_i \in T\), \(\text{top}(s)=a\),
+\(\text{bottom}(s)=b\), then \(M \models P(t_a,t_b)\).
+
+Proofing by induction. If \(n=1\) then s is a tile \(\tile{a}{b}\) and
+\(F_{\tile{a}{b}}\) is \(P(t_a,t_b)\).
+
+Step: \(s=s_1s'\), \(s = s2,\dots,sn\) with bottom \(s' = b'\), top \(s' =
+a'\).
+
+By induction, $M \models P(t_a',t_b')$.
+
+In particular $$M \models (P(t_a',t_b') \rightarrow
+P(f_{a1}(t_a'),f_{b1}(t_b')))$$ so $M \models P(t_a,t_b)$.
+
+Then we have the proposition establishes by induction.
+
+\end{proof}
+\end{proof}
+
+\end{proof}

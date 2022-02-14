@@ -1,0 +1,22 @@
+\section{Pumping theorem}
+
+\begin{lemma}[Pumping lemma for Regular languages]
+For all regular language L, \(\exists q, \forall x \in L, |x| \ge q\),
+we have \(x = uvw\in L\), \(|v|\ge 1, |uv| \le q\), and
+\(uv^kw\in L, \forall k \ge 0\). (Pumping from v)
+\end{lemma}
+\begin{proof}
+
+\(L\) is a regular language, FSA \(A\) recognizes L.
+
+\(x = x_1x_2\dots x_n \in L\) is any word of length \(n\), \(n \ge |Q|\).
+
+Then for \(\epsilon, x_1, x_1x_2, \cdots, x_1x_2\cdots x_n\) with length
+at least \(|Q|+1\), there are \(i < j \le n\) s.t.
+\(\delta(S, x_1\cdots x_i) = \delta(S, x_1\cdots x_j)\).
+
+Denote
+\(u = x_1\cdots x_i, v = x_{x+1}\cdots x_j, \omega = x_{j+1}\dots x_n\),
+we have \(uv^k\omega \in L \forall k \ge 0\).
+
+\end{proof}

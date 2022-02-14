@@ -1,0 +1,21 @@
+\section{Bounded Maximization}
+
+\begin{definition}[Bounded Maximization]
+$$BoundedMax(P): (b,x) \mapsto \max \{0 \le i \le b \mid P(i,x)\}$$
+\end{definition}
+
+\begin{theorem}[Bounded Max Primitive Recursive]
+If $P$ is primitive recursive then $BoundedMax(P)$ is primitive
+recursive.
+\end{theorem}
+
+\begin{proof}
+$BoundedMax(P)$ can be represented as
+
+$$
+B(b,\mathbf{x}) = 
+\begin{cases} \Dzero(\mathbf{x}), & b = 0\\
+ifThenElse(P(b,\mathbf{x}),b,B(b-1, \mathbf{x})), &b > 0 
+\end{cases}
+$$
+\end{proof}

@@ -1,0 +1,21 @@
+\section{\texorpdfstring{$\mu$}{μ}-recursion}
+
+\begin{definition}[$\mu$-recursion]
+if $f$ is primitive recursive then it's $\mu$-recursive.
+
+if $f$ is a $(k+1)$-ary $\mu$-recursive function, then $\mu f$ is the $k$-ary function defined by
+
+$$(\mu f)(x) = \min\{i \ge 0 \mid f(i,x) = 0\}$$
+
+$\mu f$ is $\mu$-recursive.
+\end{definition}
+
+$\mu$ is a partial function.
+
+Ackermann function is $\mu$-recursive.
+
+\begin{observation}
+$A(3,4) = A(2, A(3,3)) = A(2, A(2,A(3,2))$
+\end{observation}
+
+Ackermann functions can be computed via a stack. Per stack operations are primitive recursive, and $\mu$ factor loops until the stack is reduced to $1$.

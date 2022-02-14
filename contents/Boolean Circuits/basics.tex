@@ -1,0 +1,50 @@
+\section{Basics}
+
+Boolean circuits are constructed via \emph{Boolean basic functions}.
+
+$\B^n \rightarrow \B$: $\lnot$, $\land$, $\lor$, $\parity$, NAND, NOR, etc.
+
+\paragraph{3-Majority function $\Maj(x,y,z)$ and its circuits}
+
+\begin{itemize}
+\item \(\Land(x\lor y, x\lor z, y\lor z)\)
+\item \(\Lor(x\land y, x\land z, y\land z)\)
+\end{itemize}
+
+\begin{remark}
+The Majority function for more than 3 input cannot be induced.
+\end{remark}
+
+Their Truth table are shown in table \ref{tab:truth-table-of-major-function}:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{c|c}
+    \hline
+         x y z & Result \\\hline
+        \(x+y+z \le 1\) & 0 \\\hline
+        \(x+y+z > 1\) & 1 \\\hline
+    \end{tabular}
+    \caption{Truth Table of $\Maj_3$}
+    \label{tab:truth-table-of-major-function}
+\end{table}
+
+This shows that different \emph{circuits} can represent same \emph{function}.
+
+\begin{theorem}[Boolean Circuit $\rightarrow$ Function]\label{th:boolean-circuit-soundness}
+Every Boolean function can be computed by a circuit.
+\end{theorem}
+
+\begin{proof}
+Let the Boolean function set \(B: \B^n \rightarrow \B\), define \(f_{\arr{t}}(\arr{x}) \in B := [ \arr{x} = \arr{t} ]\), which checks a single situation.
+
+We have 
+$$f_{\text{eye}_n}(\arr{x}) = x_n \land \Land_{i \neq n} \neg {x_i}$$
+which represents only $x_n$ is meet.
+
+Then a CNF sub-word can be represented as $f_t(\arr{x}) = \Land_t f_{eye_i}(\arr{x})$. The CNF can be constructed via $\Lor_i f_i(\arr{x})$.
+\end{proof}
+
+\begin{remark}[Equivalent DNF]
+Let $\hat{f}_{\arr{t}}(\arr{x}) := [\arr{x} \neq \arr{t}]$, following similar procedures, and the DNF can also be constructed.
+\end{remark}

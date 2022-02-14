@@ -1,0 +1,39 @@
+\section{Natural Numbers}
+
+We can use lambda calculus to denote natural numbers (in the Church way)
+
+\begin{align*}
+0 &= \lambda f x.x \\
+1 &= \lambda f x.(f x) \\
+n &= \lambda f x.f^{(n)} x
+\end{align*}
+
+\paragraph{Successor Function} For \(n = \lambda f x.f^{(n)} x\), we have
+$$(n\;f) \rightarrow_{\beta} \lambda x. f^{(n)} x$$
+$$(n\;f)(f\;x) \rightarrow_{\beta} \lambda f x.f^{(n+1)}x$$
+
+Then we have the successor function:
+$$succ = \lambda n. (\lambda f\;x.(n\;f)(f\;x))$$
+
+\paragraph{Addition} For \(n = \lambda f x.f^{(n)} x\),
+\(m = \lambda f x.f^{(m)} x\),
+$$add = \lambda m\;n.\lambda f\;x .(n\;f\;(m\;f\;x))$$
+
+Another way to do this: (as \(m\) are functions ready for taking a
+function and a value)
+
+$$addalt = \lambda m\;n.((m\; succ)\;n)$$
+
+which means run \(succ\) for \(m\) times on \(n\).
+
+\paragraph{Multiplication} Primitive recursive way:
+
+$$mul=\lambda m\;n.((m\;(add\;n))\;\hat{0})$$
+
+$$mulalt=\lambda m\;n\;f.(m\;(n\;f))$$
+
+
+\paragraph{Exponentiation} Primitive recursive way:
+$$\lambda m\;n.((n\;(mul\;m))\;\hat{1})$$
+
+Or just $$(n\;m)$$ which is \(m^n\).

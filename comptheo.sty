@@ -1,0 +1,78 @@
+% Theorem definition
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{exercise}{Exercise}[chapter]
+\newtheorem{problem}{Problem}
+
+\newenvironment{solution}
+{
+    \begin{proof}[Solution]
+    \renewcommand{\qedsymbol}{$\blacksquare$}
+}
+{
+    \end{proof}
+}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{observation}{Observation}
+\newtheorem*{example}{Example}
+
+% Linebreak hooks
+
+%\newcommand{\hkend}{\ensuremath{\text{\textcolor{gray}{$\swarrow$}}}}
+%\newcommand{\hkbgn}{\ensuremath{\text{\textcolor{gray}{$\hookrightarrow$}}}}
+
+% disable PDF-strings
+\pdfstringdefDisableCommands{%
+  \def\\{}%
+  \def\texttt#1{<#1>}%
+  \def\hskip#1{}%
+}
+
+\newcommand{\tile}[2]{%
+    \begin{bmatrix}
+    #1 \\ #2
+    \end{bmatrix}
+}
+
+\newenvironment{regular}
+{
+\begin{center}
+\ttfamily
+}
+{
+\end{center}
+}
+
+\newcommand{\regex}[1]{\ifmmode {\text{\texttt{#1}}} \else {\texttt{#1}} \fi}
+\newcommand{\parity}{\oplus}
+\newcommand{\dotminus}{\mathbin{\ooalign{\hss\raise1ex\hbox{.}\hss\cr%
+  \mathsurround=0pt$-$}}}
+\DeclareMathOperator{\Maj}{Maj}
+\DeclareMathOperator{\TFP}{TFP}
+\DeclareMathOperator{\Dzero}{zero}
+\DeclareMathOperator{\Dsucc}{succ}
+\DeclareMathOperator{\DProj}{Proj}
+\DeclareMathOperator{\sort}{sort}
+\DeclareMathOperator{\Dif}{if}
+\renewcommand{\emptyset}{\varnothing}
+\providecommand{\by}{\ifmmode \sim \else \(\sim\) \fi}
+
+\newcommand{\Func}[1]{\begin{center}\texttt{#1}\end{center}}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\arr}[1]{\mathbf{#1}}
+
+\providecommand{\divides}{\mid}
+\providecommand{\Land}{\bigwedge}
+\providecommand{\Lor}{\bigvee}
+\providecommand{\B}{\mathbb{B}}
+
+\usepackage{import}
+\usepackage[english]{babel}

@@ -1,0 +1,71 @@
+\section{Cantor's Diagonal Argument}
+
+\begin{definition}[$\mathbb{N}^+$]
+\(\mathbb{N}^+ = \bigcup_{i=0}^{\infty} \mathbb{N}^i\).
+\end{definition}
+
+\begin{definition}[\(\{0,1\}^\mathbb{N}\)]
+\(\{0,1\}^\mathbb{N}\) be the set contains all of \(\{0,1\}^*\).
+\end{definition}
+
+\begin{theorem}[Cantor's diagonal argument]\label{th:cantor-digonal}
+There is no bijection between $\{0,1\}^\mathbb{N}$ and $\mathbb{N}$.
+\end{theorem}
+
+\begin{proof}
+
+Assume the bijection is performed as:
+
+\begin{align*}
+f(1) &= x_1^1 x_2^1 \dots x_n^1 \dots \\
+f(2) &= x_1^2 x_2^2 \dots x_n^2 \dots \\
+f(3) &= x_1^3 x_2^3 \dots x_n^3 \dots \\
+\dots & \dots \\
+f(n) &= x_1^m x_2^m \dots x_n^m \dots \\
+\end{align*}
+
+Select the diagonal $d = x_1^1x_2^2x_3^3\dots$ and negate bit-wise: \(\overline{d} = \overline{x_1^1}\overline{x_2^2}\overline{x_3^3}\dots\)
+
+\(\forall k, f(k)\) cannot match \(\overline{d}\) , as the \(k\)-th bit does not
+match.
+\end{proof}
+
+\begin{corollary}[\(\{0,1\}^\mathbb{N} \not \cong \mathbb{N}\)]
+ \(\{0,1\}^\mathbb{N} \ge \mathbb{N}\)
+\end{corollary}
+
+\begin{proof}
+\(\mathbb{N} \rightarrow \{0,1\}^\mathbb{N}\) by binary representation,
+add a 1 at front to recognize padding zeroes.
+
+\(\{0,1\}^\mathbb{N} \rightarrow \mathbb{N}\) cannot be found according to theorem \ref{th:cantor-digonal}.
+\end{proof}
+
+\subsection{Relationship between \texorpdfstring{\(\mathbb{R}\) and
+\(\B^\mathbb{N}\)}{R, and B\^N}}
+\begin{corollary}
+[\(\mathbb{R} \cong \{0,1\}^\mathbb{N}\)]
+\end{corollary}
+
+\begin{proof}
+for $\mathbb{R} \rightarrow \{0,1\}^{\mathbb{N}}$:
+
+We first find a bijection function that
+\(\mathbb{R} \mapsto (0,1)\): \(f(x) = \frac{e^x}{e^x+1}\).
+
+\((0,1) \rightarrow \{0,1\}^\mathbb{N}\): An injective function,
+represent as float numbers in binary format. The 1x part is omitted as
+all of them start with 0.
+
+This function misses the trailing \(0\) (and \(1\)), so it's not
+subjective. (It treats \(0.1000000\dots\) and \(0.0111111\dots\) as the
+same)
+
+For \(\{0,1\}^\mathbb{N} \rightarrow \mathbb{R}\): 
+
+Represent as
+\(0.x_1x_2x_3\dots\) but not as a binary float. Then \(0.01111\dots\)
+and \(0.100000\dots\) are not the same.
+
+Then with theorem \ref{th:shroeder}, \(\mathbb{R} \cong \{0,1\}^\mathbb{N}\).
+\end{proof}

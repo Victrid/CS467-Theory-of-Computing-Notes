@@ -1,0 +1,69 @@
+\section{Non-deterministic Turing Machine}
+
+\subsection{\texorpdfstring{$\lambda$}{λ}-calculus}
+
+\begin{theorem}
+There is a Turing Machine that takes a
+\(\lambda\)-term A and outputs \(B\) such that
+\(A \rightarrow \succ_\beta B\) (if any).
+\end{theorem}
+
+\begin{proof}
+
+Turing Machines only have finite alphabet (but \(\lambda\)-calculus have
+infinite variable set): use indicators \(x_0, x_1, x_{10}\) to reduce
+the alphabet.
+
+\(\lambda\)-calculus have multiple ways to do simplification in
+\(\beta\)-reduction. Like those Y-combinators, some of the
+simplification route will not stop.
+
+\begin{definition}[NDTM transition set]
+\(\delta \subseteq Q \times \Gamma \times Q \times \Gamma \times \{L,S,R\}\).
+\((q,s,q',s',d) \in \delta\) means the Turing Machine is allowed to
+perform this transition (Other transition can also be done).
+
+Non-deterministic \(\delta\) defines a binary relation rather than
+functions on \(\Gamma^*\times Q \times \Gamma^*\).
+\end{definition}
+
+Convention: if \(q \in \{q_{accept}, q_{reject}\}\) then
+\(\forall q' (q,s,q',s',d) \not \in \delta\) (Termination)
+
+\begin{definition}[NDTM Accepts]
+Non-deterministic Turing Machine \emph{accepts} \(x\) if
+\(q_{start} x \overset{\delta}{\rightarrow}^* yq_{accept}z\).
+
+The \emph{reject} state should not be defined. Otherwise one \(x\) can
+be accepted and rejected, by different paths.
+\end{definition}
+
+
+\begin{theorem}
+let \(M\) be a non-deterministic Turing Machine, there
+is a deterministic Turing Machine \(M'\) with \(L(M) = L(M')\).
+\end{theorem}
+
+\begin{proof}
+The deterministic Turing machine can be designed to try all
+possibilities.
+
+Let the \(l = \max_{q,s}|\delta(q,s)|\).
+
+Add a choice tape and a work tape.
+
+For every Phase:
+
+\begin{itemize}
+\item
+  delete the work tape
+\item
+  increase the choice tape by 1 (like in binary, as maximum fan-out is
+  limited), and check the status.
+\end{itemize}
+
+This performs as a broad-first search. It prevents that like entering a
+infinite loop and can never get out of a state.
+\end{proof}
+
+\end{proof}
